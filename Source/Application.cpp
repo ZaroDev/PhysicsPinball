@@ -8,6 +8,8 @@
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleSceneGame.h"
+#include "ModuleSceneEnding.h"
 
 #include "Application.h"
 
@@ -20,6 +22,8 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	player = new ModulePlayer(this);
 	scene_intro = new ModuleSceneIntro(this);
+	scene_game = new ModuleSceneGame(this);
+	scene_ending = new ModuleSceneEnding(this);
 	physics = new ModulePhysics(this);
 
 	// The order of calls is very important!

@@ -12,6 +12,8 @@ class ModuleAudio;
 class ModulePlayer;
 class ModuleSceneIntro;
 class ModulePhysics;
+class ModuleSceneGame;
+class ModuleSceneEnding;
 
 class Application
 {
@@ -23,6 +25,8 @@ public:
 	ModuleAudio* audio;
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
+	ModuleSceneGame* scene_game;
+	ModuleSceneEnding* scene_ending;
 	ModulePhysics* physics;
 
 private:
