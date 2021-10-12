@@ -27,8 +27,6 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
-	
-	templateTex = App->textures->Load("pinball/Backgrounds/template.png");
 
 
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
@@ -50,12 +48,7 @@ update_status ModuleSceneGame::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
-
-
-
-
-
-	App->renderer->Blit(templateTex, 0, 0);
+	
 
 
 	return UPDATE_CONTINUE;

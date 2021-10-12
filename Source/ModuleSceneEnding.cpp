@@ -27,6 +27,7 @@ bool ModuleSceneEnding::Start()
 	gameover = App->textures->Load("pinball/Backgrounds/gameover.png");
 	highscore = App->textures->Load("pinball/Backgrounds/highscore.png");
 	playAgain = App->textures->Load("pinball/Backgrounds/playAgain.png");
+	yareSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
 	counter = 0;
 
 
@@ -65,6 +66,13 @@ update_status ModuleSceneEnding::Update()
 	}
 	if ((counter / 60) % 2 == 0)
 		App->renderer->Blit(playAgain, 30, 564);
+
+
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		App->audio->PlayFx(yareSFX);
+		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_game);
+	}
 
 	return UPDATE_CONTINUE;
 }

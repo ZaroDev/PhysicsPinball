@@ -21,7 +21,7 @@ private:
 	SDL_Texture* highscore;
 	SDL_Texture* playAgain;
 	int counter;
-
+	int yareSFX;
 	
 
 
