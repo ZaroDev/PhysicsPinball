@@ -25,7 +25,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	scene_game = new ModuleSceneGame(this, false);
 	scene_ending = new ModuleSceneEnding(this, false);
-	physics = new ModulePhysics(this);
+	physics = new ModulePhysics(this, false);
 	fade_to_black = new ModuleFadeToBlack(this);
 
 	// The order of calls is very important!

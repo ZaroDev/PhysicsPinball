@@ -11,7 +11,7 @@
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-
+	
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -22,6 +22,7 @@ bool ModuleSceneGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	App->physics->Enable();
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -40,7 +41,7 @@ bool ModuleSceneGame::Start()
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	App->physics->Disable();
 	return true;
 }
 
