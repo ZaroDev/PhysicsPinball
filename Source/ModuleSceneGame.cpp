@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModulePhysics.h"
+#include "Cordinates.h"
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -28,18 +29,6 @@ bool ModuleSceneGame::Start()
 	
 	templateTex = App->textures->Load("pinball/Backgrounds/template.png");
 
-
-	int staticBody01[18] = {
-	65, 810,
-	45, 828,
-	46, 895,
-	56, 903,
-	146, 930,
-	162, 932,
-	171, 917,
-	169, 907,
-	85, 823
-	};
 
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
 
