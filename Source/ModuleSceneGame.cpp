@@ -29,7 +29,6 @@ bool ModuleSceneGame::Start()
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
 	background = App->textures->Load("pinball/Backgrounds/jojosex.png");
 
-
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, staticBody02, 18, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));
@@ -37,7 +36,22 @@ bool ModuleSceneGame::Start()
 	chains.add(App->physics->CreateChain(0, 0, staticBody05, 52, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, staticBody06, 52, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, staticBody07, 52, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, midleBorder, 30, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, rightBorder, 58, STATIC));
 
+
+	//upper circles
+	circles.add(App->physics->CreateCircle(238, 159, 16, STATIC));				//238 es el centro 
+	circles.add(App->physics->CreateCircle(180, 200, 28, STATIC));
+	circles.add(App->physics->CreateCircle(295, 200, 28, STATIC));
+	circles.add(App->physics->CreateCircle(213, 238, 10, STATIC));
+	circles.add(App->physics->CreateCircle(262, 238, 10, STATIC));
+	//midle circles
+	circles.add(App->physics->CreateCircle(123, 350, 45, STATIC));
+	circles.add(App->physics->CreateCircle(350, 350, 45, STATIC));
+
+	
 	return ret;
 }
 
