@@ -49,23 +49,23 @@ update_status ModuleSceneEnding::Update()
 	if (counter < 270)
 	{
 		if((counter / 60) % 2 == 0)
-			App->renderer->Blit(gameover, 0, 0);
+			App->renderer->Blit(gameover, 56, 66);
 	}
 	else
 	{
-		App->renderer->Blit(gameover, 0, 0);
+		App->renderer->Blit(gameover, 56, 66);
 	}
-	if (270 > counter < 540)
+	if (counter < 540 && counter > 270)
 	{
 		if ((counter / 60) % 2 == 0)
-			App->renderer->Blit(highscore, 0, 0);
+			App->renderer->Blit(highscore, 125, 200);
 	}
 	else
 	{
-		App->renderer->Blit(highscore, 0, 0);
+		App->renderer->Blit(highscore, 125, 200);
 	}
 	if ((counter / 60) % 2 == 0)
-		App->renderer->Blit(playAgain, 0, 0);
+		App->renderer->Blit(playAgain, 30, 564);
 
 	return UPDATE_CONTINUE;
 }
