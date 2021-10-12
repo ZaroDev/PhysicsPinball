@@ -129,7 +129,7 @@ int staticBody05[52] = {
 };
 
 // up-right			offset=512-(512-58-418)
-int ofset03 = 512-36;
+int ofset03 = 512 - 36-1;
 int staticBody06[52] = {
 	ofset03 - 60, 540,
 	ofset03 - 66, 544,
