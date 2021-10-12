@@ -1,7 +1,7 @@
-#include "ModuleSceneEnding.h"
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
+#include "ModuleSceneEnding.h"
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
@@ -23,6 +23,11 @@ bool ModuleSceneEnding::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	App->audio->PlayMusic("pinball/Music/endingMusic.ogg");
+	background = App->textures->Load("pinball/Backgrounds/ending.png");
+	gameover = App->textures->Load("pinball/Backgrounds/gameover.png");
+	highscore = App->textures->Load("pinball/Backgrounds/highscore.png");
+	playAgain = App->textures->Load("pinball/Backgrounds/playAgain.png");
+	counter = 0;
 
 
 	return ret;
@@ -39,16 +44,22 @@ bool ModuleSceneEnding::CleanUp()
 // Update: draw background
 update_status ModuleSceneEnding::Update()
 {
-	
+	counter++;
+	App->renderer->Blit(background, 0, 0);
+	if (counter < 270)
+	{
+		if((counter / 60) % 2 == 0)
+			App->renderer->Blit(gameover, 0, 0);
+	}
+	else
+	{
+		App->renderer->Blit(gameover, 0, 0);
+	}
 
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSceneEnding::PostUpdate()
-{
 
-	return update_status();
-}
 
 void ModuleSceneEnding::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {

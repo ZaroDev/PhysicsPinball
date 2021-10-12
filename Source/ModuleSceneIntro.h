@@ -16,7 +16,7 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
-public:
+private:
 	SDL_Texture* background;
 	SDL_Texture* title;
 	SDL_Texture* subtitle;

@@ -1,8 +1,8 @@
-#pragma once
+
 #include "Module.h"
 #include "Globals.h"
 
-class PhysBody;
+
 
 class ModuleSceneEnding : public Module
 {
@@ -12,12 +12,17 @@ public:
 
 	bool Start();
 	update_status Update();
-	update_status PostUpdate();
+
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+private:
 
-public:
-	
+	SDL_Texture* background;
+	SDL_Texture* gameover;
+	SDL_Texture* highscore;
+	SDL_Texture* playAgain;
+	int counter;
+
 	
 
 

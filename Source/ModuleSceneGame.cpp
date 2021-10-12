@@ -1,5 +1,4 @@
 #include "ModuleSceneGame.h"
-#include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
