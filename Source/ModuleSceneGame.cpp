@@ -31,7 +31,12 @@ bool ModuleSceneGame::Start()
 
 
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
-
+	chains.add(App->physics->CreateChain(0, 0, staticBody02, 18, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, staticBody04, 52, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, staticBody05, 52, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, staticBody06, 52, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, staticBody07, 52, STATIC));
 
 	return ret;
 }
