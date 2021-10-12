@@ -46,8 +46,3 @@ update_status ModuleSceneGame::Update()
 }
 
 
-void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
-{
-
-
-}
