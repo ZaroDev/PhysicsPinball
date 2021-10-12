@@ -49,10 +49,10 @@ update_status ModuleSceneIntro::Update()
 {
 	counter++;
 	App->renderer->Blit(background, 0, 0);
-	App->renderer->Blit(title, 50, 245);
-	App->renderer->Blit(subtitle, 100, 470);
+	App->renderer->Blit(title, 71, 171);
+	App->renderer->Blit(subtitle, 125, 360);
 	if ((counter / 60) % 2 == 0)
-		App->renderer->Blit(playButton, 70, 650);
+		App->renderer->Blit(playButton, 70, 625);
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
