@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
+#include "ModuleFadeToBlack.h"
 
 ModuleSceneEnding::ModuleSceneEnding(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -21,6 +22,7 @@ bool ModuleSceneEnding::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+	App->audio->PlayMusic("pinball/Music/endingMusic.ogg");
 
 
 	return ret;

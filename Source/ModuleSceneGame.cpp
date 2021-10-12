@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
+#include "ModuleFadeToBlack.h"
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -22,7 +23,7 @@ bool ModuleSceneGame::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	
+	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
 	
 
 	return ret;
@@ -39,7 +40,9 @@ bool ModuleSceneGame::CleanUp()
 // Update: draw background
 update_status ModuleSceneGame::Update()
 {
-	
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
+
 	return UPDATE_CONTINUE;
 }
 
