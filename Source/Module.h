@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Globals.h"
-
+#include "SDL/include/SDL.h"
 class Application;
 class PhysBody;
 

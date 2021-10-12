@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "SDL/include/SDL.h"
 
 
 class ModuleSceneGame : public Module
