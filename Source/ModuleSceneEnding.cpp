@@ -55,6 +55,17 @@ update_status ModuleSceneEnding::Update()
 	{
 		App->renderer->Blit(gameover, 0, 0);
 	}
+	if (270 > counter < 540)
+	{
+		if ((counter / 60) % 2 == 0)
+			App->renderer->Blit(highscore, 0, 0);
+	}
+	else
+	{
+		App->renderer->Blit(highscore, 0, 0);
+	}
+	if ((counter / 60) % 2 == 0)
+		App->renderer->Blit(playAgain, 0, 0);
 
 	return UPDATE_CONTINUE;
 }
