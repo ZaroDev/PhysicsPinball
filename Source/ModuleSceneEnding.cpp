@@ -46,11 +46,10 @@ update_status ModuleSceneEnding::Update()
 {
 	counter++;
 	App->renderer->Blit(background, 0, 0);
-	if (counter < 270)
-	{
-		if((counter / 60) % 2 == 0)
-			App->renderer->Blit(gameover, 56, 66);
-	}
+
+	if((counter / 60) % 2 == 0)
+		App->renderer->Blit(gameover, 56, 66);
+
 	else
 	{
 		App->renderer->Blit(gameover, 56, 66);
@@ -60,7 +59,7 @@ update_status ModuleSceneEnding::Update()
 		if ((counter / 60) % 2 == 0)
 			App->renderer->Blit(highscore, 125, 200);
 	}
-	else
+	else if(counter > 270)
 	{
 		App->renderer->Blit(highscore, 125, 200);
 	}
