@@ -7,8 +7,7 @@
 class ModuleSceneGame : public Module
 {
 public:
-	SDL_Texture* tex;
-	SDL_Texture* templateTex;
+	SDL_Texture* background;
 	int score;
 
 	p2List<PhysBody*> circles;

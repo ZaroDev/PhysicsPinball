@@ -27,6 +27,7 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
+	background = App->textures->Load("pinball/Backgrounds/jojosex.png");
 
 
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
@@ -50,7 +51,7 @@ update_status ModuleSceneGame::Update()
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
 	
 
-
+	App->renderer->Blit(background, 0, 0);
 	return UPDATE_CONTINUE;
 }
 
