@@ -1,6 +1,6 @@
 #pragma once
 
-
+// down-left thing
 int staticBody01[18] = {
 	65, 810,
 	45, 828,
@@ -13,7 +13,21 @@ int staticBody01[18] = {
 	85, 823
 };
 
-int staticBody02[70] = {
+// down-right thing
+int staticBody02[18] = {
+	403, 810,
+	423, 828,
+	423, 897,
+	412, 906,
+	324, 933,
+	308, 934,
+	299, 921,
+	300, 909,
+	392, 819
+};
+
+// central thing
+int staticBody03[70] = {
 	237, 542,
 	230, 540,
 	226, 534,
