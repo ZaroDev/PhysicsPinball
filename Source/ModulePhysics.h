@@ -12,6 +12,13 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
+// types of bodies
+enum bodyType {
+DYNAMIC,
+STATIC,
+KINEMATIC
+};
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -42,10 +49,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
-	PhysBody* CreateChain(int x, int y, int* points, int size);
+	PhysBody* CreateCircle(int x, int y, int radius,bodyType type);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType type);
+	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType type);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
