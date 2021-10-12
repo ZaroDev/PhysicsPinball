@@ -41,8 +41,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\TTC\Q3\PhysicsII\PhysicsPinball\PhysicsPinball\External_Libraries;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\TTC\Q3\PhysicsII\PhysicsPinball\PhysicsPinball\External_Libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\External_Libraries;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\External_Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
