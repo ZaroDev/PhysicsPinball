@@ -63,11 +63,6 @@ update_status ModuleSceneIntro::Update()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSceneIntro::PostUpdate()
-{
-	
-	return update_status();
-}
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {

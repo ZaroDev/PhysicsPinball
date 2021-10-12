@@ -45,11 +45,6 @@ update_status ModuleSceneGame::Update()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSceneGame::PostUpdate()
-{
-
-	return update_status();
-}
 
 void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
