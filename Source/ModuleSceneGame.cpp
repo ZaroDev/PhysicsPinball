@@ -50,6 +50,12 @@ bool ModuleSceneGame::Start()
 	//midle circles
 	circles.add(App->physics->CreateCircle(123, 350, 45, STATIC));
 	circles.add(App->physics->CreateCircle(350, 350, 45, STATIC));
+	//down circles
+	circles.add(App->physics->CreateCircle(28, 638, 8, STATIC));
+	circles.add(App->physics->CreateCircle(447, 638, 8, STATIC));
+	circles.add(App->physics->CreateCircle(56, 675, 23, STATIC));
+	circles.add(App->physics->CreateCircle(418, 675, 23, STATIC));
+
 
 	
 	return ret;
