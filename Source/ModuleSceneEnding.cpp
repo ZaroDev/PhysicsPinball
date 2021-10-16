@@ -27,7 +27,7 @@ bool ModuleSceneEnding::Start()
 	gameover = App->textures->Load("pinball/Backgrounds/gameover.png");
 	highscore = App->textures->Load("pinball/Backgrounds/highscore.png");
 	playAgain = App->textures->Load("pinball/Backgrounds/playAgain.png");
-	yareSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
+	yareSFX = App->audio->LoadFx("pinball/SFX/ohNoSFX.wav");
 	counter = 0;
 
 
