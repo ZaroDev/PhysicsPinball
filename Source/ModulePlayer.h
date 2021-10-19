@@ -19,7 +19,6 @@ public:
 	iPoint pos;
 
 	SDL_Texture* ball;
-	SDL_Texture* leftP;
-	SDL_Texture* rightP;
+
 	p2List<PhysBody*> ballCol;
 };

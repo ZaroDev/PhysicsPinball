@@ -6,7 +6,6 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
-#include "ModulePhysics.h"
 #include "Cordinates.h"
 #include "ModulePlayer.h"
 
@@ -29,6 +28,8 @@ bool ModuleSceneGame::Start()
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
 	background = App->textures->Load("pinball/Backgrounds/game1.png");
+	leftP = App->textures->Load("pinball/Sprites/leftP.png");
+	rightP = App->textures->Load("pinball/Sprites/rightP.png");
 
 	
 	App->player->Enable();
@@ -62,7 +63,14 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(418, 675, 23, STATIC));
 
 
-	
+	pullL = App->physics->CreateRectangle(195, 928, 50, 12, KINEMATIC);
+	pullR = App->physics->CreateRectangle(277, 928, 50, 12, KINEMATIC);
+	pLeft = App->physics->CreateCircle(195, 928, 2, STATIC);
+	pRight = App->physics->CreateCircle(277, 928, 2, STATIC);
+	/*jLeft = App->physics->CreatePullJoint(pLeft->body, pullL->body, { PIXEL_TO_METERS(-13), 0 });
+	jRight = App->physics->CreatePullJoint(pLeft->body, pullL->body, { PIXEL_TO_METERS(13), 0 });*/
+
+
 	return ret;
 }
 
@@ -79,12 +87,36 @@ update_status ModuleSceneGame::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		pLeft->body->ApplyForceToCenter(force, 1);
+		
 
 	
 
+	}
+
+
+
+
+
+	
 	App->renderer->Blit(background, 0, 0);
+	int x, y;
+	pullL->GetPosition(x, y);
+	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pullL->GetRotation());
+	pullR->GetPosition(x, y);
+	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pullR->GetRotation());
+
 	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneGame::PostUpdate()
+{
+
+	
+	return update_status();
 }
 
 
