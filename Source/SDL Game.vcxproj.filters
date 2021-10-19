@@ -55,9 +55,6 @@
     <ClInclude Include="ModuleRender.h">
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePhysics.h">
-      <Filter>Source Files\Modules\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="Cordinates.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePhysics.h">
+      <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

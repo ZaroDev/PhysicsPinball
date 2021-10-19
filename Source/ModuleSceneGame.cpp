@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePhysics.h"
 #include "Cordinates.h"
+#include "ModulePlayer.h"
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -27,7 +28,11 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
-	background = App->textures->Load("pinball/Backgrounds/jojosex.png");
+	background = App->textures->Load("pinball/Backgrounds/game1.png");
+
+	
+	App->player->Enable();
+
 
 	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, staticBody02, 18, STATIC));
@@ -74,6 +79,8 @@ update_status ModuleSceneGame::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
+	
+
 	
 
 	App->renderer->Blit(background, 0, 0);
