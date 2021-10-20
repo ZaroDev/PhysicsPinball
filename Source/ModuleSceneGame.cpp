@@ -48,29 +48,29 @@ bool ModuleSceneGame::Start()
 
 
 	//upper circles
-	circles.add(App->physics->CreateCircle(238, 159, 16, STATIC));				//238 es el centro 
-	circles.add(App->physics->CreateCircle(180, 200, 28, STATIC));
-	circles.add(App->physics->CreateCircle(295, 200, 28, STATIC));
-	circles.add(App->physics->CreateCircle(213, 238, 10, STATIC));
-	circles.add(App->physics->CreateCircle(262, 238, 10, STATIC));
+	circles.add(App->physics->CreateCircle(238, 59, 16, STATIC));				//238 es el centro 
+	circles.add(App->physics->CreateCircle(180, 100, 28, STATIC));
+	circles.add(App->physics->CreateCircle(295, 100, 28, STATIC));
+	circles.add(App->physics->CreateCircle(213, 138, 10, STATIC));
+	circles.add(App->physics->CreateCircle(262, 138, 10, STATIC));
 	//midle circles
-	circles.add(App->physics->CreateCircle(123, 350, 45, STATIC));
-	circles.add(App->physics->CreateCircle(350, 350, 45, STATIC));
+	circles.add(App->physics->CreateCircle(123, 250, 45, STATIC));
+	circles.add(App->physics->CreateCircle(350, 250, 45, STATIC));
 	//down circles
-	circles.add(App->physics->CreateCircle(28, 638, 8, STATIC));
-	circles.add(App->physics->CreateCircle(447, 638, 8, STATIC));
-	circles.add(App->physics->CreateCircle(56, 675, 23, STATIC));
-	circles.add(App->physics->CreateCircle(418, 675, 23, STATIC));
+	circles.add(App->physics->CreateCircle(28, 538, 8, STATIC));
+	circles.add(App->physics->CreateCircle(447, 538, 8, STATIC));
+	circles.add(App->physics->CreateCircle(56, 575, 23, STATIC));
+	circles.add(App->physics->CreateCircle(418, 575, 23, STATIC));
 
 	pLeft = new Puller();
 	pRight = new Puller();
 
-	pLeft->Rect = App->physics->CreateRectangle(190, 928, 50, 12, DYNAMIC);
-	pRight->Rect = App->physics->CreateRectangle(277, 928, 50, 12, DYNAMIC);
+	pLeft->Rect = App->physics->CreateRectangle(190, 828, 50, 12, DYNAMIC);
+	pRight->Rect = App->physics->CreateRectangle(277, 828, 50, 12, DYNAMIC);
 	pRight->rightSide = true;
 	pLeft->rightSide = false;
-	pLeft->Circle = App->physics->CreateCircle(170, 928, 2, STATIC);
-	pRight->Circle = App->physics->CreateCircle(295, 928, 2, STATIC);
+	pLeft->Circle = App->physics->CreateCircle(170, 828, 2, STATIC);
+	pRight->Circle = App->physics->CreateCircle(295, 828, 2, STATIC);
 	App->physics->CreateRevoluteJoint(pLeft->Circle, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
 	App->physics->CreateRevoluteJoint(pRight->Circle, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, false, true);
 
@@ -131,7 +131,7 @@ update_status ModuleSceneGame::Update()
 
 
 	
-	App->renderer->Blit(background, 0, 0);
+	App->renderer->Blit(background, 0, -100);
 	int x, y;
 	pLeft->Rect->GetPosition(x, y);
 	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
