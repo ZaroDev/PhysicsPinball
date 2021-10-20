@@ -62,13 +62,20 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(56, 675, 23, STATIC));
 	circles.add(App->physics->CreateCircle(418, 675, 23, STATIC));
 
+	pLeft = new Puller();
+	pRight = new Puller();
 
-	pullL = App->physics->CreateRectangle(195, 928, 50, 12, DYNAMIC);
-	pullR = App->physics->CreateRectangle(277, 928, 50, 12, DYNAMIC);
-	pLeft = App->physics->CreateCircle(175, 928, 2, STATIC);
-	pRight = App->physics->CreateCircle(290, 928, 2, STATIC);
-	jLeft = App->physics->CreateRevoluteJoint(pullL, { -0.5, 0 }, pLeft, {0, 0}, 35.0f, false, true);
-	jRight = App->physics->CreateRevoluteJoint(pullR, { 0.5, 0 }, pRight, { 0, 0 }, 35.0f, false, true);
+	pLeft->Rect = App->physics->CreateRectangle(195, 928, 50, 12, DYNAMIC);
+	pRight->Rect = App->physics->CreateRectangle(277, 928, 50, 12, DYNAMIC);
+	pRight->rightSide = true;
+	pLeft->rightSide = false;
+	pLeft->Circle = App->physics->CreateCircle(175, 928, 2, STATIC);
+	pRight->Circle = App->physics->CreateCircle(290, 928, 2, STATIC);
+	App->physics->CreateRevoluteJoint(pLeft->Circle, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
+	App->physics->CreateRevoluteJoint(pRight->Circle, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, false, true);
+
+	pullers.add(pLeft);
+	pullers.add(pRight);
 
 
 	return ret;
@@ -88,19 +95,29 @@ update_status ModuleSceneGame::Update()
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		pLeft->body->ApplyForce({ 0, -3 }, { 0, 0 }, true);
-		
-
-	
-
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		p2List_item<Puller*>* p = pullers.getFirst();
+		while (p != NULL)
+		{
+			if (p->data->rightSide == false)
+			{
+				p->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
+			}
+			p = p->next;
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		pRight->body->ApplyForce({ 0, 3 }, { 0, 0 }, true);
-
-
-
-
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		p2List_item<Puller*>* p = pullers.getFirst();
+		while (p != NULL)
+		{
+			if (p->data->rightSide == true)
+			{
+				p->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
+			}
+			p = p->next;
+		}
 	}
 
 
@@ -109,10 +126,10 @@ update_status ModuleSceneGame::Update()
 	
 	App->renderer->Blit(background, 0, 0);
 	int x, y;
-	pullL->GetPosition(x, y);
-	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pullL->GetRotation());
-	pullR->GetPosition(x, y);
-	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pullR->GetRotation());
+	pLeft->Rect->GetPosition(x, y);
+	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
+	pRight->Rect->GetPosition(x, y);
+	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pRight->Rect->GetRotation());
 
 	return UPDATE_CONTINUE;
 }

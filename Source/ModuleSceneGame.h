@@ -4,7 +4,12 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "ModulePhysics.h"
-
+struct Puller
+{
+	PhysBody* Rect;
+	PhysBody* Circle;
+	bool rightSide;
+};
 
 class ModuleSceneGame : public Module
 {
@@ -18,12 +23,9 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> chains;
-	PhysBody* pullL;
-	PhysBody* pullR;
-	PhysBody* pLeft;
-	PhysBody* pRight;
-	b2RevoluteJoint* jLeft;
-	b2RevoluteJoint* jRight;
+	p2List<Puller*> pullers;
+	Puller* pLeft;
+	Puller* pRight;
 	
 
 public:
