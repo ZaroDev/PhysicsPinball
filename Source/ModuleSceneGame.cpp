@@ -63,12 +63,12 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(418, 675, 23, STATIC));
 
 
-	pullL = App->physics->CreateRectangle(195, 928, 50, 12, KINEMATIC);
-	pullR = App->physics->CreateRectangle(277, 928, 50, 12, KINEMATIC);
-	pLeft = App->physics->CreateCircle(195, 928, 2, STATIC);
-	pRight = App->physics->CreateCircle(277, 928, 2, STATIC);
-	/*jLeft = App->physics->CreatePullJoint(pLeft->body, pullL->body, { PIXEL_TO_METERS(-13), 0 });
-	jRight = App->physics->CreatePullJoint(pLeft->body, pullL->body, { PIXEL_TO_METERS(13), 0 });*/
+	pullL = App->physics->CreateRectangle(195, 928, 50, 12, DYNAMIC);
+	pullR = App->physics->CreateRectangle(277, 928, 50, 12, DYNAMIC);
+	pLeft = App->physics->CreateCircle(175, 928, 2, STATIC);
+	pRight = App->physics->CreateCircle(290, 928, 2, STATIC);
+	jLeft = App->physics->CreateRevoluteJoint(pullL, { -0.5, 0 }, pLeft, {0, 0}, 35.0f, false, true);
+	jRight = App->physics->CreateRevoluteJoint(pullR, { 0.5, 0 }, pRight, { 0, 0 }, 35.0f, false, true);
 
 
 	return ret;
@@ -88,15 +88,20 @@ update_status ModuleSceneGame::Update()
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		b2Vec2 force = b2Vec2(0, -200);
-		pLeft->body->ApplyForceToCenter(force, 1);
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		pLeft->body->ApplyForce({ 0, -3 }, { 0, 0 }, true);
 		
 
 	
 
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		pRight->body->ApplyForce({ 0, 3 }, { 0, 0 }, true);
 
+
+
+
+	}
 
 
 
