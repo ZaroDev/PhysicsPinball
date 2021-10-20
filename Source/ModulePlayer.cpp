@@ -38,7 +38,6 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ballCol.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 12, DYNAMIC));
-		LOG("ADDED BALL");
 	}
 
 	p2List_item<PhysBody*>* c = ballCol.getFirst();

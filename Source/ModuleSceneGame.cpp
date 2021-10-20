@@ -23,7 +23,7 @@ bool ModuleSceneGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	App->physics->Enable();
-
+	score = 0;
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
