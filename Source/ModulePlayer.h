@@ -19,6 +19,6 @@ public:
 	iPoint pos;
 	int lives;
 	SDL_Texture* ball;
-
+	bool spawnBall;
 	p2List<PhysBody*> ballCol;
 };

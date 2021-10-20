@@ -20,7 +20,7 @@ bool ModulePlayer::Start()
 	lives = 3;
 	ball = App->textures->Load("pinball/Sprites/ballxd.png");
 	
-
+	spawnBall = true;
 	return true;
 }
 
@@ -28,6 +28,7 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	App->textures->Unload(ball);
 
 	return true;
 }
@@ -39,7 +40,12 @@ update_status ModulePlayer::Update()
 	{
 		ballCol.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 12, DYNAMIC));
 	}
-
+	if (spawnBall)
+	{
+		ballCol.add(App->physics->CreateCircle(485, 700, 12, DYNAMIC));
+		spawnBall = false;
+	}
+	
 	p2List_item<PhysBody*>* c = ballCol.getFirst();
 
 	while (c != NULL)
