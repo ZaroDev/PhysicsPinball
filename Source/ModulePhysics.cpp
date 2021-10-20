@@ -16,7 +16,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	
 }
 
 // Destructor
@@ -29,7 +29,7 @@ bool ModulePhysics::Start()
 	LOG("Creating Physics 2D environment");
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
-	
+	debug = false;
 	
 	return true;
 }
@@ -182,21 +182,19 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, bodyTy
 // 
 update_status ModulePhysics::PostUpdate()
 {
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
-
-	if(!debug)
-		return UPDATE_CONTINUE;
-
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
-	for(b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	if (debug)
 	{
-		for(b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{
-			switch(f->GetType())
+			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 			{
-				// Draw circles ------------------------------------------------
+				switch (f->GetType())
+				{
+					// Draw circles ------------------------------------------------
 				case b2Shape::e_circle:
 				{
 					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
@@ -212,10 +210,10 @@ update_status ModulePhysics::PostUpdate()
 					int32 count = polygonShape->GetVertexCount();
 					b2Vec2 prev, v;
 
-					for(int32 i = 0; i < count; ++i)
+					for (int32 i = 0; i < count; ++i)
 					{
 						v = b->GetWorldPoint(polygonShape->GetVertex(i));
-						if(i > 0)
+						if (i > 0)
 							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
 
 						prev = v;
@@ -232,10 +230,10 @@ update_status ModulePhysics::PostUpdate()
 					b2ChainShape* shape = (b2ChainShape*)f->GetShape();
 					b2Vec2 prev, v;
 
-					for(int32 i = 0; i < shape->m_count; ++i)
+					for (int32 i = 0; i < shape->m_count; ++i)
 					{
 						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if(i > 0)
+						if (i > 0)
 							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
 						prev = v;
 					}
@@ -256,14 +254,14 @@ update_status ModulePhysics::PostUpdate()
 					App->renderer->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
 				}
 				break;
-			}
+				}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
+				// TODO 1: If mouse button 1 is pressed ...
+				// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
+				// test if the current body contains mouse position
+			}
 		}
 	}
-
 	
 
 	return UPDATE_CONTINUE;

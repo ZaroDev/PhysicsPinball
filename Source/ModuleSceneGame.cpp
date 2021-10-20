@@ -65,12 +65,12 @@ bool ModuleSceneGame::Start()
 	pLeft = new Puller();
 	pRight = new Puller();
 
-	pLeft->Rect = App->physics->CreateRectangle(195, 928, 50, 12, DYNAMIC);
+	pLeft->Rect = App->physics->CreateRectangle(190, 928, 50, 12, DYNAMIC);
 	pRight->Rect = App->physics->CreateRectangle(277, 928, 50, 12, DYNAMIC);
 	pRight->rightSide = true;
 	pLeft->rightSide = false;
-	pLeft->Circle = App->physics->CreateCircle(175, 928, 2, STATIC);
-	pRight->Circle = App->physics->CreateCircle(290, 928, 2, STATIC);
+	pLeft->Circle = App->physics->CreateCircle(170, 928, 2, STATIC);
+	pRight->Circle = App->physics->CreateCircle(295, 928, 2, STATIC);
 	App->physics->CreateRevoluteJoint(pLeft->Circle, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
 	App->physics->CreateRevoluteJoint(pRight->Circle, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, false, true);
 
@@ -86,6 +86,13 @@ bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	App->physics->Disable();
+	App->player->Disable();
+	App->textures->Unload(leftP);
+	App->textures->Unload(rightP);
+	App->textures->Unload(background);
+	delete pLeft;
+	delete pRight;
+
 	return true;
 }
 

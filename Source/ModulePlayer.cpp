@@ -17,7 +17,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-
+	lives = 3;
 	ball = App->textures->Load("pinball/Sprites/ballxd.png");
 	
 

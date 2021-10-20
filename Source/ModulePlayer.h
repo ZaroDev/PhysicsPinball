@@ -17,7 +17,7 @@ public:
 
 public:
 	iPoint pos;
-
+	int lives;
 	SDL_Texture* ball;
 
 	p2List<PhysBody*> ballCol;
