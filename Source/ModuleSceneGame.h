@@ -4,6 +4,9 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "ModulePhysics.h"
+#include "Animation.h"
+
+
 struct Puller
 {
 	PhysBody* Rect;
@@ -15,6 +18,10 @@ struct Piston
 	PhysBody* pivot;
 	PhysBody* mobile;
 };
+struct Bumper {
+	PhysBody* bumper;
+	Animation animation;
+};
 
 struct Sensor {
 	enum sensorValue
@@ -22,7 +29,11 @@ struct Sensor {
 		NONE = -1,
 		DEATH,
 		DIO,
-		PLUS10
+		PLUS10,
+		BUTTON,
+		START,
+		CLOSE,
+		MAX
 	};
 	PhysBody* sensor;
 	sensorValue value;
@@ -48,9 +59,10 @@ public:
 	Puller* pLeft;
 	Puller* pRight;
 	Piston piston;
-
+	p2List<Bumper*> bumpers;
 	//Senors
 	p2List<Sensor*> sensors;
+	bool openDoor;
 
 public:
 	ModuleSceneGame(Application* app, bool start_enabled = true);

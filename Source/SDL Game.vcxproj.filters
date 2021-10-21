@@ -79,6 +79,7 @@
     <ClInclude Include="ModulePhysics.h">
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

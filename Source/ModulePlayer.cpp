@@ -41,10 +41,11 @@ update_status ModulePlayer::Update()
 		ballCol.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 12, DYNAMIC));
 		ballCol.getLast()->data->listener = this;
 	}
-	if (spawnBall)
+	if (spawnBall && lives > 0)
 	{
 		ballCol.add(App->physics->CreateCircle(485, 700, 12, DYNAMIC));
 		ballCol.getLast()->data->listener = this;
+		ballCol.getLast()->data->body->SetFixedRotation(true);
 		spawnBall = false;
 	}
 	
