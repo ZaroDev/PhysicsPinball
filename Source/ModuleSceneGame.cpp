@@ -128,7 +128,9 @@ bool ModuleSceneGame::Start()
 	CreateSensor(App->physics->CreateCircleSensor(104+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateCircleSensor(343+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateRectangleSensor(485, 500, 20, 8, STATIC), Sensor::START, true);
-
+	PhysBody* l = new PhysBody();
+	l = App->physics->CreateRectangle(435, 120, 23, 77, STATIC);
+	limit.add(l);
 
 	pLeft = new Puller();
 	pRight = new Puller();
@@ -198,6 +200,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 				}
 				openDoor = true;
+				
 			}
 			
 			if (s->data->value == Sensor::CLOSE)
@@ -280,9 +283,9 @@ update_status ModuleSceneGame::Update()
 		piston.mobile->body->ApplyForce({ 0, -20 }, { 0,0 }, true);
 	}
 
-	if (!openDoor)
+	if (openDoor)
 	{
-		App->physics->CreateRectangle(435, 120, 23, 77, STATIC);
+		limit.getFirst()->data**-
 	}
 
 	

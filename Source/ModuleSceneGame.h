@@ -62,6 +62,8 @@ public:
 	p2List<Bumper*> bumpers;
 	//Senors
 	p2List<Sensor*> sensors;
+
+	p2List<PhysBody*> limit;
 	bool openDoor;
 
 public:
