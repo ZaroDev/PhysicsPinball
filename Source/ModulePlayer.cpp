@@ -39,10 +39,12 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ballCol.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 12, DYNAMIC));
+		ballCol.getLast()->data->listener = this;
 	}
 	if (spawnBall)
 	{
 		ballCol.add(App->physics->CreateCircle(485, 700, 12, DYNAMIC));
+		ballCol.getLast()->data->listener = this;
 		spawnBall = false;
 	}
 	

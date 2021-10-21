@@ -62,7 +62,7 @@ bool ModuleSceneGame::Start()
 	circles.add(App->physics->CreateCircle(56, 575, 23, STATIC));
 	circles.add(App->physics->CreateCircle(418, 575, 23, STATIC));
 
-	CreateSensor(App->physics->CreateRectangleSensor(0, 1024, 512, 30, STATIC), Sensor::DEATH, true);
+	CreateSensor(App->physics->CreateRectangleSensor(0, 924, 1000, 1, STATIC), Sensor::DEATH, true);
 
 	pLeft = new Puller();
 	pRight = new Puller();
@@ -84,6 +84,26 @@ bool ModuleSceneGame::Start()
 	pullers.add(pLeft);
 	pullers.add(pRight);
 
+	p2List_item<Sensor*>* s = sensors.getFirst();
+	p2List_item<PhysBody*>* p = App->player->ballCol.getFirst();
+	while (s != NULL && p != NULL)
+	{
+		int x, y;
+		s->data->sensor->GetPosition(x, y);
+
+		if(!p->data->Contains(x, y))
+		{
+			switch (s->data->value)
+			{
+			case Sensor::DEATH:
+			{
+				s->data->isActive = true;
+			}
+			}
+		}
+		s = s->next;
+		p = p->next;
+	}
 
 	return ret;
 }
@@ -105,20 +125,28 @@ bool ModuleSceneGame::CleanUp()
 
 void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	LOG("ONCOLLISION");
-	p2List_item<Sensor*>* death = sensors.getFirst();
-	p2List_item<PhysBody*>* player = App->player->ballCol.getFirst();
-	while (death != NULL)
-	{
-		if (bodyA == death->data->sensor && bodyB->body == player->data->body)
-		{
+	p2List_item<Sensor*>* s = sensors.getFirst();
 
-			App->player->lives--;
-			LOG("DEAD");
+	while (s != NULL)
+	{
+
+		if (bodyA == s->data->sensor && bodyB->listener == (Module*)App->player && s->data->isActive)
+		{
+			switch (s->data->value)
+			{
+			case Sensor::DEATH:
+			{
+				App->player->lives--;
+				App->player->spawnBall = true;
+				s->data->isActive = false;
+			}
+			}
+
 		}
-		death = death->next;
+
+		s = s->next;
+
 	}
-	player = player->next;
 }
 
 // Update: draw background
@@ -129,6 +157,15 @@ update_status ModuleSceneGame::Update()
 
 	if(App->player->lives <= 0)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_REPEAT)
+	{
+		App->renderer->camera.y -= 1;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		App->renderer->camera.y += 1;
+	}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -174,6 +211,8 @@ update_status ModuleSceneGame::Update()
 	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
 	pRight->Rect->GetPosition(x, y);
 	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pRight->Rect->GetRotation());
+
+	
 
 	return UPDATE_CONTINUE;
 }
