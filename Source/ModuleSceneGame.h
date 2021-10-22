@@ -23,6 +23,12 @@ struct Bumper {
 	Animation animation;
 };
 
+struct bounceChain
+{
+	PhysBody* chainBody;
+
+};
+
 struct Sensor {
 	enum sensorValue
 	{

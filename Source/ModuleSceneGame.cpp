@@ -36,17 +36,48 @@ bool ModuleSceneGame::Start()
 
 	openDoor = true;
 
+	chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));		// midle thing of dio
+	
+	// down chains
+	Bumper* chdl = new Bumper;
+	chdl->bumper = App->physics->CreateChain(0, 0, staticBody01, 18, STATIC);
+	chdl->bumper->listener = this;
+	bumpers.add(chdl);
 
-	chains.add(App->physics->CreateChain(0, 0, staticBody01, 18, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody02, 18, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody04, 52, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody05, 52, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody06, 52, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, staticBody07, 52, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
+	Bumper* chdr = new Bumper;
+	chdr->bumper = App->physics->CreateChain(0, 0, staticBody02, 18, STATIC);
+	chdr->bumper->listener = this;
+	bumpers.add(chdl);
+
+
+	// midle chains 
+	Bumper* chml = new Bumper;
+	chml->bumper=App->physics->CreateChain(0, 0, staticBody04, 52, STATIC);
+	chml->bumper->listener = this;
+	bumpers.add(chml);
+
+	Bumper* chmr = new Bumper;
+	chmr->bumper = App->physics->CreateChain(0, 0, staticBody06, 52, STATIC);
+	chmr->bumper->listener = this;
+	bumpers.add(chmr);
+
+
+	// up chains
+	Bumper* chul = new Bumper;
+	chul->bumper = App->physics->CreateChain(0, 0, staticBody05, 52, STATIC);
+	chul->bumper->listener = this;
+	bumpers.add(chul);
+
+	Bumper* chur = new Bumper;
+	chur->bumper = App->physics->CreateChain(0, 0, staticBody07, 52, STATIC);
+	chur->bumper->listener = this;
+	bumpers.add(chur);
+
+
+	// Scene Borders
 	chains.add(App->physics->CreateChain(0, 0, midleBorder, 30, STATIC));
 	chains.add(App->physics->CreateChain(0, 0, rightBorder, 58, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
 
 	circles.add(App->physics->CreateCircle(60, 125, 13, STATIC));
 
@@ -283,10 +314,10 @@ update_status ModuleSceneGame::Update()
 		piston.mobile->body->ApplyForce({ 0, -20 }, { 0,0 }, true);
 	}
 
-	if (openDoor)
+	/*if (openDoor)
 	{
 		limit.getFirst()->data**-
-	}
+	}*/
 
 	
 	
