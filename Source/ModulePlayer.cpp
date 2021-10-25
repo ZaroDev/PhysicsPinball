@@ -38,14 +38,55 @@ update_status ModulePlayer::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		ballCol.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 12, DYNAMIC));
+		b2BodyDef body;
+
+		body.type = b2_dynamicBody;
+
+		body.position.Set(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
+
+		b2Body* b = App->physics->world->CreateBody(&body);
+
+		b2CircleShape shape;
+		shape.m_radius = PIXEL_TO_METERS(12);
+		b2FixtureDef fixture;
+		fixture.shape = &shape;
+		fixture.density = 1.0f;
+
+		b->CreateFixture(&fixture);
+
+		PhysBody* pbody = new PhysBody();
+		pbody->body = b;
+		b->SetUserData(pbody);
+		pbody->width = pbody->height = 12;
+		ballCol.add(pbody);
+		ballCol.getLast()->data->body->SetFixedRotation(true);
 		ballCol.getLast()->data->listener = this;
 	}
 	if (spawnBall && lives > 0)
 	{
-		ballCol.add(App->physics->CreateCircle(485, 700, 12, DYNAMIC));
-		ballCol.getLast()->data->listener = this;
+		b2BodyDef body;
+
+		body.type = b2_dynamicBody;
+
+		body.position.Set(PIXEL_TO_METERS(485), PIXEL_TO_METERS(700));
+
+		b2Body* b = App->physics->world->CreateBody(&body);
+
+		b2CircleShape shape;
+		shape.m_radius = PIXEL_TO_METERS(12);
+		b2FixtureDef fixture;
+		fixture.shape = &shape;
+		fixture.density = 1.0f;
+
+		b->CreateFixture(&fixture);
+
+		PhysBody* pbody = new PhysBody();
+		pbody->body = b;
+		b->SetUserData(pbody);
+		pbody->width = pbody->height = 12;
+		ballCol.add(pbody);
 		ballCol.getLast()->data->body->SetFixedRotation(true);
+		ballCol.getLast()->data->listener = this;
 		spawnBall = false;
 	}
 	

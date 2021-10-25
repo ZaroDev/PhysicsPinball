@@ -22,9 +22,12 @@ int main(int argc, char ** argv)
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 	Application* App = NULL;
-
+	int FPS = 60;
+	int startTime;
+	float RealFPS;
 	while (state != MAIN_EXIT)
 	{
+		startTime = SDL_GetTicks();
 		switch (state)
 		{
 		case MAIN_CREATION:
@@ -80,6 +83,14 @@ int main(int argc, char ** argv)
 			break;
 
 		}
+		if ((1000 / FPS) > SDL_GetTicks() - startTime)
+		{
+			SDL_Delay((1000 / FPS) - (SDL_GetTicks() - startTime));
+		}
+
+		RealFPS = (SDL_GetTicks() - startTime);
+		printf("\nFPS: %f", 1000 / RealFPS);
+		
 	}
 
 	delete App;

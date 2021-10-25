@@ -159,8 +159,8 @@ bool ModuleSceneGame::Start()
 	CreateSensor(App->physics->CreateCircleSensor(104+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateCircleSensor(343+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateRectangleSensor(485, 500, 20, 8, STATIC), Sensor::START, true);
-	PhysBody* l = new PhysBody();
-	l = App->physics->CreateRectangle(435, 120, 23, 77, STATIC);
+	l = new PhysBody();
+	l = App->physics->CreateRectangle(435, 120, 10, 50, STATIC);
 	limit.add(l);
 
 	pLeft = new Puller();
@@ -259,6 +259,12 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		b = b->next;
 	}
+	if (bodyA == l && bodyB->listener == (Module*)App->player)
+	{
+		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+		force *= 0.5f;
+		bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
+	}
 }
 
 // Update: draw background
@@ -311,14 +317,17 @@ update_status ModuleSceneGame::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
-		piston.mobile->body->ApplyForce({ 0, -20 }, { 0,0 }, true);
+		piston.mobile->body->ApplyForce({ 0, -60 }, { 0,0 }, true);
 	}
 
-	/*if (openDoor)
+	if (openDoor)
 	{
-		limit.getFirst()->data**-
-	}*/
-
+		l->body->SetTransform({PIXEL_TO_METERS(535),PIXEL_TO_METERS(120)}, 0);
+	}
+	else
+	{
+		l->body->SetTransform({ PIXEL_TO_METERS(435),PIXEL_TO_METERS(120) }, 0);
+	}
 	
 	
 	App->renderer->Blit(background, 0, 0);

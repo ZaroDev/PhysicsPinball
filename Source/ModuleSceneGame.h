@@ -71,6 +71,7 @@ public:
 
 	p2List<PhysBody*> limit;
 	bool openDoor;
+	PhysBody* l;
 
 public:
 	ModuleSceneGame(Application* app, bool start_enabled = true);
