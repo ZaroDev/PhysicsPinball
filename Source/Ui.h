@@ -1,10 +1,10 @@
 #pragma once
 #include "Module.h"
-class Score : public Module
+class Ui : public Module
 {
 public:
-	Score(Application* app, bool start_enabled = true);
-	virtual ~Score();
+	Ui(Application* app, bool start_enabled = true);
+	virtual ~Ui();
 
 	void AddScore(int value);
 	void Draw();

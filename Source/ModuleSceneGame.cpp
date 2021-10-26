@@ -26,7 +26,7 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
-	background = App->textures->Load("pinball/Backgrounds/game1.png");
+	background = App->textures->Load("pinball/Backgrounds/game.png");
 	leftP = App->textures->Load("pinball/Sprites/leftP.png");
 	rightP = App->textures->Load("pinball/Sprites/rightP.png");
 

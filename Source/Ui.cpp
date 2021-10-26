@@ -3,7 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 
-Score::Score(Application* app, bool start_enabled) : Module(app, start_enabled)
+Ui::Ui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	points = 0;
 	prevScore = 0;
@@ -15,18 +15,18 @@ Score::Score(Application* app, bool start_enabled) : Module(app, start_enabled)
 	nums = App->textures->Load("");*/
 }
 
-Score::~Score()
+Ui::~Ui()
 {
 	
 }
 
-bool Score::Start() {
+bool Ui::Start() {
 
 
 	return true;
 }
 
-update_status Score::Update()
+update_status Ui::Update()
 {
 	
 	//Draw();
@@ -34,14 +34,14 @@ update_status Score::Update()
 	return UPDATE_CONTINUE;
 }
 
-bool Score::CleanUp()
+bool Ui::CleanUp()
 {
 
 
 	return true;
 }
 
-void Score::Draw()
+void Ui::Draw()
 {
 	//bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
 	int spacing = 1;
@@ -54,7 +54,7 @@ void Score::Draw()
 	}
 }
 
-void Score::AddScore(int value)
+void Ui::AddScore(int value)
 {
 	switch (comboCount)
 	{
