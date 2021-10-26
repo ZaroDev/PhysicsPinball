@@ -80,7 +80,7 @@
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Score.h">
+    <ClInclude Include="ModuleUi.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
@@ -130,7 +130,7 @@
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Source Files\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
+    <ClCompile Include="ModuleUi.cpp">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>

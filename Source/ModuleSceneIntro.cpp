@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleUi.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -58,6 +59,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		App->audio->PlayFx(yesSFX);
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_game);
+		App->ui->Enable();
 	}
 
 	return UPDATE_CONTINUE;

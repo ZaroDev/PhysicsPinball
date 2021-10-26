@@ -1,10 +1,16 @@
+#ifndef __UI_H__
+#define __UI_H__
+
+
 #pragma once
 #include "Module.h"
-class Ui : public Module
+
+
+class ModuleUi : public Module
 {
 public:
-	Ui(Application* app, bool start_enabled = true);
-	virtual ~Ui();
+	ModuleUi(Application* app, bool start_enabled);
+	virtual ~ModuleUi();
 
 	void AddScore(int value);
 	void Draw();
@@ -14,7 +20,7 @@ public:
 	bool CleanUp();
 
 public:
-	int points;
+	int score;
 	int prevScore;
 	int highScore;
 
@@ -22,13 +28,10 @@ public:
 	int specialCount;
 
 private:
-	SDL_Texture* scoreTex = nullptr;
-	SDL_Texture* prevScoreTex = nullptr;
-	SDL_Texture* highScoreTex = nullptr;
 	SDL_Texture* nums = nullptr;
-
-	int xOffset = 1;
-	int yOffset = 1;
+	int numW = 20;
+	int numH= 19;
 	int maxDrawNums = 5;
 };
 
+#endif // !__UI_H__

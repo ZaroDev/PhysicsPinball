@@ -15,6 +15,7 @@ class ModulePhysics;
 class ModuleSceneGame;
 class ModuleSceneEnding;
 class ModuleFadeToBlack;
+class ModuleUi;
 
 
 class Application
@@ -31,6 +32,7 @@ public:
 	ModuleSceneEnding* scene_ending;
 	ModuleFadeToBlack* fade_to_black;
 	ModulePhysics* physics;
+	ModuleUi* ui;
 
 private:
 
