@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
+#include "SString.h"
 
 #include <stdio.h>
 #include <cstdio>
@@ -42,7 +43,7 @@ update_status ModuleUi::Update()
 	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
 	else
 	{
-		const char* text;
+		SString text("%7d", score);
 	
 		
 		
