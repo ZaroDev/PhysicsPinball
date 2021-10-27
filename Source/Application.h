@@ -15,6 +15,7 @@ class ModulePhysics;
 class ModuleSceneGame;
 class ModuleSceneEnding;
 class ModuleFadeToBlack;
+class ModuleFonts;
 class ModuleUi;
 
 
@@ -32,6 +33,7 @@ public:
 	ModuleSceneEnding* scene_ending;
 	ModuleFadeToBlack* fade_to_black;
 	ModulePhysics* physics;
+	ModuleFonts* fonts;
 	ModuleUi* ui;
 
 private:

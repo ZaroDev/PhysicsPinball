@@ -11,6 +11,7 @@
 #include "ModuleSceneGame.h"
 #include "ModuleSceneEnding.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleFonts.h"
 #include "ModuleUi.h"
 
 #include "Application.h"
@@ -28,6 +29,7 @@ Application::Application()
 	scene_ending = new ModuleSceneEnding(this, false);
 	physics = new ModulePhysics(this, false);
 	fade_to_black = new ModuleFadeToBlack(this);
+	fonts = new ModuleFonts(this, true);
 	ui = new ModuleUi(this, false);
 
 	// The order of calls is very important!
@@ -47,6 +49,7 @@ Application::Application()
 	AddModule(scene_intro);
 	AddModule(scene_game);
 	AddModule(scene_ending);
+	AddModule(fonts);
 	AddModule(ui);
 
 
