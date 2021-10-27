@@ -43,7 +43,7 @@ update_status ModuleUi::Update()
 	else
 	{
 		const char* text;
-		sprintf_s(text, "%5d", score);
+	
 		
 		
 	}
