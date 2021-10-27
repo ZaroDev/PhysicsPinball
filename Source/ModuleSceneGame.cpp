@@ -42,12 +42,12 @@ bool ModuleSceneGame::Start()
 	Bumper* chdl = new Bumper;
 	chdl->bumper = App->physics->CreateChain(0, 0, staticBody01, 18, STATIC);
 	chdl->bumper->listener = this;
-	bumpers.add(chdl);
+	sideBump.add(chdl);
 
 	Bumper* chdr = new Bumper;
 	chdr->bumper = App->physics->CreateChain(0, 0, staticBody02, 18, STATIC);
 	chdr->bumper->listener = this;
-	bumpers.add(chdl);
+	sideBump.add(chdr);
 
 
 	// midle chains 
@@ -109,13 +109,13 @@ bool ModuleSceneGame::Start()
 
 	//midle circles
 	Bumper* mid1 = new Bumper;
-	mid1->bumper = App->physics->CreateCircle(123, 250, 45, STATIC);
+	mid1->bumper = App->physics->CreateCircle(123, 250, 50, STATIC);
 	mid1->bumper->listener = this;
 
 	bumpers.add(mid1);
 
 	Bumper* mid2 = new Bumper;
-	mid2->bumper = App->physics->CreateCircle(350, 250, 45, STATIC);
+	mid2->bumper = App->physics->CreateCircle(350, 250, 50, STATIC);
 	mid2->bumper->listener = this;
 
 	bumpers.add(mid2);
@@ -168,13 +168,16 @@ bool ModuleSceneGame::Start()
 
 	pLeft->Rect = App->physics->CreateRectangle(190, 828, 50, 12, DYNAMIC);
 	pRight->Rect = App->physics->CreateRectangle(277, 828, 50, 12, DYNAMIC);
+	pLeft->Rect->body->SetAwake(true);
+	pRight->Rect->body->SetAwake(true);
+	pLeft->Rect->listener = this;
+	pRight->Rect->listener = this;
 	pRight->rightSide = true;
 	pLeft->rightSide = false;
-	pLeft->Circle = App->physics->CreateCircle(170, 828, 2, STATIC);
-	pRight->Circle = App->physics->CreateCircle(295, 828, 2, STATIC);
-	App->physics->CreateRevoluteJoint(pLeft->Circle, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
-	App->physics->CreateRevoluteJoint(pRight->Circle, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, false, true);
-
+	cLeft = App->physics->CreateCircle(170, 828, 2, STATIC);
+	cRight= App->physics->CreateCircle(295, 828, 2, STATIC);
+	App->physics->CreateRevoluteJoint(cLeft, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
+	App->physics->CreateRevoluteJoint(cRight, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, true, true);
 
 	piston.pivot = App->physics->CreateRectangle(485, 894, 20, 8, STATIC);
 	piston.mobile = App->physics->CreateRectangle(485, 794, 20, 8, DYNAMIC);
@@ -183,7 +186,11 @@ bool ModuleSceneGame::Start()
 	pullers.add(pLeft);
 	pullers.add(pRight);
 
+	dioFX = App->audio->LoadFx("pinball/SFX/daworldo.wav");
+	oraSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
 	
+	oraL = App->textures->Load("pinball/FX/oraoraL");
+	oraR = App->textures->Load("pinball/FX/oraoraR");
 
 	return ret;
 }
@@ -238,20 +245,42 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			{
 				openDoor = false;
 			}
+			if (s->data->value == Sensor::DIO)
+			{
+				App->audio->PlayFx(dioFX);
+				s->data->isActive = false;
+			}
 
 		}
 
 		s = s->next;
 
 	}
+	p2List_item<Puller*>* p = pullers.getFirst();
+	while (p != NULL)
+	{
+		if (bodyA == p->data->Rect  && bodyB->listener == (Module*)App->player)
+		{
+			App->audio->PlayFx(oraSFX);
+			App->renderer->Blit(oraL, 0, 0, NULL);
+		}
+		if (bodyA == p->data->Rect && bodyB->listener == (Module*)App->player)
+		{
+			App->audio->PlayFx(oraSFX);
+			App->renderer->Blit(oraR, 0, 0, NULL);
+		}
+		p = p->next;
+	}
 	p2List_item<Bumper*>* b = bumpers.getFirst();
+	
 	while (b != NULL)
 	{
+
  		if (bodyA == b->data->bumper && bodyB->listener == (Module*)App->player)
 		{
 			//App->audio->PlayFx(bumperFx);
 			b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-			force *= 0.5f;
+			force *= 0.6f;
 			bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
 			b->data->animation.Update();
 			//App->player->currentScore += 100;
@@ -259,11 +288,26 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		b = b->next;
 	}
+	int r = (rand() % 100) / 50;
+	if (bodyA == sideBump.getFirst()->data->bumper && bodyB->listener == (Module*)App->player)
+	{
+		//App->audio->PlayFx(sideBumperFx);
+		bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
+		//App->player->currentScore += 10;
+		return;
+	}
+	if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
+	{
+		//App->audio->PlayFx(sideBumperFx);
+		bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
+		//App->player->currentScore += 10;
+		return;
+	}
 	if (bodyA == l && bodyB->listener == (Module*)App->player)
 	{
 		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-		force *= 0.5f;
-		bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
+		force *= 0.1f;
+		bodyB->body->ApplyAngularImpulse(force.y, true);
 	}
 }
 

@@ -47,7 +47,7 @@ update_status ModulePlayer::Update()
 		b2Body* b = App->physics->world->CreateBody(&body);
 
 		b2CircleShape shape;
-		shape.m_radius = PIXEL_TO_METERS(12);
+		shape.m_radius = PIXEL_TO_METERS(13);
 		b2FixtureDef fixture;
 		fixture.shape = &shape;
 		fixture.density = 1.0f;
@@ -57,9 +57,9 @@ update_status ModulePlayer::Update()
 		PhysBody* pbody = new PhysBody();
 		pbody->body = b;
 		b->SetUserData(pbody);
-		pbody->width = pbody->height = 12;
+		pbody->width = pbody->height = 13;
 		ballCol.add(pbody);
-		ballCol.getLast()->data->body->SetFixedRotation(true);
+		
 		ballCol.getLast()->data->listener = this;
 	}
 	if (spawnBall && lives > 0)
@@ -73,7 +73,7 @@ update_status ModulePlayer::Update()
 		b2Body* b = App->physics->world->CreateBody(&body);
 
 		b2CircleShape shape;
-		shape.m_radius = PIXEL_TO_METERS(12);
+		shape.m_radius = PIXEL_TO_METERS(13);
 		b2FixtureDef fixture;
 		fixture.shape = &shape;
 		fixture.density = 1.0f;
@@ -83,9 +83,9 @@ update_status ModulePlayer::Update()
 		PhysBody* pbody = new PhysBody();
 		pbody->body = b;
 		b->SetUserData(pbody);
-		pbody->width = pbody->height = 12;
+		pbody->width = pbody->height = 13;
 		ballCol.add(pbody);
-		ballCol.getLast()->data->body->SetFixedRotation(true);
+		
 		ballCol.getLast()->data->listener = this;
 		spawnBall = false;
 	}

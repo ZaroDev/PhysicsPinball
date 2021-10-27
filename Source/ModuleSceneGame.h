@@ -10,7 +10,6 @@
 struct Puller
 {
 	PhysBody* Rect;
-	PhysBody* Circle;
 	bool rightSide;
 };
 struct Piston
@@ -53,6 +52,12 @@ public:
 	SDL_Texture* background;
 	int score;
 
+	int dioFX;
+	int oraSFX;
+
+	SDL_Texture* oraL;
+	SDL_Texture* oraR;
+
 	SDL_Texture* leftP;
 	SDL_Texture* rightP;
 
@@ -62,10 +67,13 @@ public:
 
 	//Puller Objects
 	p2List<Puller*> pullers;
+	PhysBody* cLeft;
+	PhysBody* cRight;
 	Puller* pLeft;
 	Puller* pRight;
 	Piston piston;
 	p2List<Bumper*> bumpers;
+	p2List<Bumper*> sideBump;
 	//Senors
 	p2List<Sensor*> sensors;
 

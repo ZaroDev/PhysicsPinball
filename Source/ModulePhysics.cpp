@@ -30,7 +30,7 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	debug = true;
-	
+	world->SetContactListener(this);
 	return true;
 }
 
@@ -41,7 +41,7 @@ update_status ModulePhysics::PreUpdate()
 
 	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
-		if (c->IsTouching())
+		if (c->IsTouching() && c->GetFixtureA()->IsSensor())
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
 			PhysBody* pb2 = (PhysBody*)c->GetFixtureB()->GetBody()->GetUserData();

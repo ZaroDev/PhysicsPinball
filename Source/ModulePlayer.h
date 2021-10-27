@@ -21,4 +21,5 @@ public:
 	SDL_Texture* ball;
 	bool spawnBall;
 	p2List<PhysBody*> ballCol;
+
 };
