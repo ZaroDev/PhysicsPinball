@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
+#include "SString.h"
 
 #include <stdio.h>
 #include <cstdio>
@@ -35,15 +36,12 @@ update_status ModuleUi::Update()
 	
 	// DRAW SCORE
 	SDL_Rect rect = { 0,0,20,19 };
-	if (score >= 99999)
-	{
-		App->fonts->BlitText(0, 0, 0, "99999");
-	}
+	if (score >= 99999) App->fonts->BlitText(0, 0, 0, "99999");
 	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
 	else
 	{
-		const char* text;
-		sprintf_s(text, "%5d", score);
+		SString text("%5d", score);
+
 		
 		
 	}
