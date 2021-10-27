@@ -43,10 +43,8 @@ update_status ModuleUi::Update()
 	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
 	else
 	{
-		SString text("%7d", score);
-	
-		
-		
+		SString text("%5d", score);
+		App->fonts->BlitText(0, 0, 0, text.GetString());	
 	}
 
 	return UPDATE_CONTINUE;
