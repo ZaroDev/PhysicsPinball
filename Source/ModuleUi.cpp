@@ -2,10 +2,14 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleFonts.h"
+
+#include <stdio.h>
+#include <cstdio>
 
 ModuleUi::ModuleUi(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	score = 0;
+	score = 4520;
 	prevScore = 0;
 	highScore = 0;
 
@@ -21,6 +25,7 @@ ModuleUi::~ModuleUi()
 bool ModuleUi::Start() {
 
 	nums = App->textures->Load("pinball/Sprites/numbers.png");
+	App->fonts->Load("pinball/Sprites/numbers.png", "0123456789-", 1);
 
 	return true;
 }
@@ -28,13 +33,20 @@ bool ModuleUi::Start() {
 update_status ModuleUi::Update()
 {
 	
-	Draw();
-	//int drawn = 0;
-	//SDL_Rect rect = { 0,0,20,19 };
-	////if (nums=nullptr) drawn=0;
-	//App->renderer->Blit(nums, 500, 0, &rect, 1.0);
-	//if (App->renderer->Blit(nums, 500, 50, NULL, 1.0) == true) drawn = 1;
-	//printf("drawn %i", drawn);
+	// DRAW SCORE
+	SDL_Rect rect = { 0,0,20,19 };
+	if (score >= 99999)
+	{
+		App->fonts->BlitText(0, 0, 0, "99999");
+	}
+	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
+	else
+	{
+		const char* text;
+		sprintf_s(text, "%5d", score);
+		
+		
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -48,13 +60,8 @@ bool ModuleUi::CleanUp()
 
 void ModuleUi::Draw()
 {
-	//bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
-	int spacing = 12;
-	int position = 0;
-	for (int i = 5; i > 1; i--)
-	{
 
-	}
+
 }
 
 void ModuleUi::AddScore(int value)
