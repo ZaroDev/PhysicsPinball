@@ -80,6 +80,8 @@ public:
 	p2List<PhysBody*> limit;
 	bool openDoor;
 	PhysBody* l;
+	bool oraLeft;
+	bool oraRight;
 
 public:
 	ModuleSceneGame(Application* app, bool start_enabled = true);

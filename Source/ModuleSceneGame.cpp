@@ -189,9 +189,10 @@ bool ModuleSceneGame::Start()
 	dioFX = App->audio->LoadFx("pinball/SFX/daworldo.wav");
 	oraSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
 	
-	oraL = App->textures->Load("pinball/FX/oraoraL");
-	oraR = App->textures->Load("pinball/FX/oraoraR");
-
+	oraL = App->textures->Load("pinball/FX/oraoraL.png");
+	oraR = App->textures->Load("pinball/FX/oraoraR.png");
+	oraLeft = false;
+	oraRight = false;
 	return ret;
 }
 
@@ -259,15 +260,15 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	p2List_item<Puller*>* p = pullers.getFirst();
 	while (p != NULL)
 	{
-		if (bodyA == p->data->Rect  && bodyB->listener == (Module*)App->player)
+		if (bodyA == p->data->Rect  && p->data->rightSide == false && bodyB->listener == (Module*)App->player)
 		{
 			App->audio->PlayFx(oraSFX);
-			App->renderer->Blit(oraL, 0, 0, NULL);
+			oraRight = true;
 		}
-		if (bodyA == p->data->Rect && bodyB->listener == (Module*)App->player)
+		if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
 		{
 			App->audio->PlayFx(oraSFX);
-			App->renderer->Blit(oraR, 0, 0, NULL);
+			oraRight = true;
 		}
 		p = p->next;
 	}
@@ -314,6 +315,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 // Update: draw background
 update_status ModuleSceneGame::Update()
 {
+
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(this, (Module*)App->scene_ending);
 
@@ -380,7 +382,17 @@ update_status ModuleSceneGame::Update()
 	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
 	pRight->Rect->GetPosition(x, y);
 	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pRight->Rect->GetRotation());
-
+	if (oraLeft)
+	{
+		App->renderer->Blit(oraL, 190, 828, NULL);
+		
+	}
+	if(oraRight)
+	{
+		App->renderer->Blit(oraR, 190, 828, NULL);
+		
+	}
+	
 	
 
 	return UPDATE_CONTINUE;
