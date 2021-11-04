@@ -43,7 +43,7 @@ update_status ModulePlayer::Update()
 		body.type = b2_dynamicBody;
 
 		body.position.Set(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
-
+	
 		b2Body* b = App->physics->world->CreateBody(&body);
 
 		b2CircleShape shape;
@@ -51,7 +51,7 @@ update_status ModulePlayer::Update()
 		b2FixtureDef fixture;
 		fixture.shape = &shape;
 		fixture.density = 1.0f;
-
+		
 		b->CreateFixture(&fixture);
 
 		PhysBody* pbody = new PhysBody();

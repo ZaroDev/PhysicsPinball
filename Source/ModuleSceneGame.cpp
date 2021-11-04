@@ -26,7 +26,7 @@ bool ModuleSceneGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
-	background = App->textures->Load("pinball/Backgrounds/game.png");
+	background = App->textures->Load("pinball/Backgrounds/placeholder.png");
 	leftP = App->textures->Load("pinball/Sprites/leftP.png");
 	rightP = App->textures->Load("pinball/Sprites/rightP.png");
 
@@ -35,51 +35,51 @@ bool ModuleSceneGame::Start()
 	App->player->Enable();
 
 	openDoor = true;
+	chains.add(App->physics->CreateChain(0, 0, borders, 30, STATIC));
+	//chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));		// midle thing of dio
+	//
+	//// down chains
+	//Bumper* chdl = new Bumper;
+	//chdl->bumper = App->physics->CreateChain(0, 0, staticBody01, 18, STATIC);
+	//chdl->bumper->listener = this;
+	//sideBump.add(chdl);
 
-	chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));		// midle thing of dio
-	
-	// down chains
-	Bumper* chdl = new Bumper;
-	chdl->bumper = App->physics->CreateChain(0, 0, staticBody01, 18, STATIC);
-	chdl->bumper->listener = this;
-	sideBump.add(chdl);
-
-	Bumper* chdr = new Bumper;
-	chdr->bumper = App->physics->CreateChain(0, 0, staticBody02, 18, STATIC);
-	chdr->bumper->listener = this;
-	sideBump.add(chdr);
-
-
-	// midle chains 
-	Bumper* chml = new Bumper;
-	chml->bumper=App->physics->CreateChain(0, 0, staticBody04, 52, STATIC);
-	chml->bumper->listener = this;
-	bumpers.add(chml);
-
-	Bumper* chmr = new Bumper;
-	chmr->bumper = App->physics->CreateChain(0, 0, staticBody06, 52, STATIC);
-	chmr->bumper->listener = this;
-	bumpers.add(chmr);
+	//Bumper* chdr = new Bumper;
+	//chdr->bumper = App->physics->CreateChain(0, 0, staticBody02, 18, STATIC);
+	//chdr->bumper->listener = this;
+	//sideBump.add(chdr);
 
 
-	// up chains
-	Bumper* chul = new Bumper;
-	chul->bumper = App->physics->CreateChain(0, 0, staticBody05, 52, STATIC);
-	chul->bumper->listener = this;
-	bumpers.add(chul);
+	//// midle chains 
+	//Bumper* chml = new Bumper;
+	//chml->bumper=App->physics->CreateChain(0, 0, staticBody04, 52, STATIC);
+	//chml->bumper->listener = this;
+	//bumpers.add(chml);
 
-	Bumper* chur = new Bumper;
-	chur->bumper = App->physics->CreateChain(0, 0, staticBody07, 52, STATIC);
-	chur->bumper->listener = this;
-	bumpers.add(chur);
+	//Bumper* chmr = new Bumper;
+	//chmr->bumper = App->physics->CreateChain(0, 0, staticBody06, 52, STATIC);
+	//chmr->bumper->listener = this;
+	//bumpers.add(chmr);
 
 
-	// Scene Borders
-	chains.add(App->physics->CreateChain(0, 0, midleBorder, 30, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, rightBorder, 58, STATIC));
-	chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
+	//// up chains
+	//Bumper* chul = new Bumper;
+	//chul->bumper = App->physics->CreateChain(0, 0, staticBody05, 52, STATIC);
+	//chul->bumper->listener = this;
+	//bumpers.add(chul);
 
-	circles.add(App->physics->CreateCircle(60, 125, 13, STATIC));
+	//Bumper* chur = new Bumper;
+	//chur->bumper = App->physics->CreateChain(0, 0, staticBody07, 52, STATIC);
+	//chur->bumper->listener = this;
+	//bumpers.add(chur);
+
+
+	//// Scene Borders
+	//chains.add(App->physics->CreateChain(0, 0, midleBorder, 30, STATIC));
+	//chains.add(App->physics->CreateChain(0, 0, rightBorder, 58, STATIC));
+	//chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
+
+	//circles.add(App->physics->CreateCircle(60, 125, 13, STATIC));
 
 	//upper circles
 	Bumper* top1 = new Bumper;
@@ -188,7 +188,9 @@ bool ModuleSceneGame::Start()
 
 	dioFX = App->audio->LoadFx("pinball/SFX/daworldo.wav");
 	oraSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
-	
+	bumperSFX = App->audio->LoadFx("pinball/SFX/bumperSFX.wav");
+	sideBumperSFX = App->audio->LoadFx("pinball/SFX/sideBumperSFX.wav");
+
 	oraL = App->textures->Load("pinball/FX/oraoraL.png");
 	oraR = App->textures->Load("pinball/FX/oraoraR.png");
 	oraLeft = false;
@@ -213,103 +215,105 @@ bool ModuleSceneGame::CleanUp()
 
 void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	p2List_item<Sensor*>* s = sensors.getFirst();
+	//p2List_item<Sensor*>* s = sensors.getFirst();
 
-	while (s != NULL)
-	{
+	//while (s != NULL)
+	//{
 
-		if (bodyA == s->data->sensor && bodyB->listener == (Module*)App->player && s->data->isActive)
-		{
-			
-			if (s->data->value == Sensor::DEATH)
-			{
-				App->player->lives--;
-				App->player->spawnBall = true;
-				s->data->isActive = false;
+	//	if (bodyA == s->data->sensor && bodyB->listener == (Module*)App->player && s->data->isActive)
+	//	{
+	//		
+	//		if (s->data->value == Sensor::DEATH)
+	//		{
+	//			App->player->lives--;
+	//			App->player->spawnBall = true;
+	//			s->data->isActive = false;
 
-			}
-			if (s->data->value == Sensor::START)
-			{
-				p2List_item<Sensor*>* reset = sensors.getFirst();
-				while (reset != NULL)
-				{
-					s->data->isActive = false;
-					reset->data->isActive = true;
-					reset = reset->next;
+	//		}
+	//		if (s->data->value == Sensor::START)
+	//		{
+	//			p2List_item<Sensor*>* reset = sensors.getFirst();
+	//			while (reset != NULL)
+	//			{
+	//				s->data->isActive = false;
+	//				reset->data->isActive = true;
+	//				reset = reset->next;
 
-				}
-				openDoor = true;
-				
-			}
-			
-			if (s->data->value == Sensor::CLOSE)
-			{
-				openDoor = false;
-			}
-			if (s->data->value == Sensor::DIO)
-			{
-				App->audio->PlayFx(dioFX);
-				s->data->isActive = false;
-			}
+	//			}
+	//			openDoor = true;
+	//			
+	//		}
+	//		
+	//		if (s->data->value == Sensor::CLOSE)
+	//		{
+	//			openDoor = false;
+	//		}
+	//		if (s->data->value == Sensor::DIO)
+	//		{
+	//			App->audio->PlayFx(dioFX);
+	//			s->data->isActive = false;
+	//		}
 
-		}
+	//	}
 
-		s = s->next;
+	//	s = s->next;
 
-	}
-	p2List_item<Puller*>* p = pullers.getFirst();
-	while (p != NULL)
-	{
-		if (bodyA == p->data->Rect  && p->data->rightSide == false && bodyB->listener == (Module*)App->player)
-		{
-			App->audio->PlayFx(oraSFX);
-			oraRight = true;
-		}
-		if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
-		{
-			App->audio->PlayFx(oraSFX);
-			oraRight = true;
-		}
-		p = p->next;
-	}
-	p2List_item<Bumper*>* b = bumpers.getFirst();
-	
-	while (b != NULL)
-	{
+	//}
+	//p2List_item<Puller*>* p = pullers.getFirst();
+	//while (p != NULL)
+	//{
+	//	if (bodyA == p->data->Rect && p->data->rightSide == false && bodyB->listener == (Module*)App->player)
+	//	{
+	//		App->audio->PlayFx(oraSFX);
+	//		oraLeft = true;
+	//		App->renderer->Blit(oraL, 150, 728, NULL);
+	//	}
+	//	if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
+	//	{
+	//		App->audio->PlayFx(oraSFX);
+	//		oraRight = true;
+	//		App->renderer->Blit(oraR, 270, 728, NULL);
+	//	}
+	//	p = p->next;
+	//}
+	//p2List_item<Bumper*>* b = bumpers.getFirst();
+	//
+	//while (b != NULL)
+	//{
 
- 		if (bodyA == b->data->bumper && bodyB->listener == (Module*)App->player)
-		{
-			//App->audio->PlayFx(bumperFx);
-			b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-			force *= 0.6f;
-			bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
-			b->data->animation.Update();
-			//App->player->currentScore += 100;
-			return;
-		}
-		b = b->next;
-	}
-	int r = (rand() % 100) / 50;
-	if (bodyA == sideBump.getFirst()->data->bumper && bodyB->listener == (Module*)App->player)
-	{
-		//App->audio->PlayFx(sideBumperFx);
-		bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
-		//App->player->currentScore += 10;
-		return;
-	}
-	if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
-	{
-		//App->audio->PlayFx(sideBumperFx);
-		bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
-		//App->player->currentScore += 10;
-		return;
-	}
-	if (bodyA == l && bodyB->listener == (Module*)App->player)
-	{
-		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-		force *= 0.1f;
-		bodyB->body->ApplyAngularImpulse(force.y, true);
-	}
+ //		if (bodyA == b->data->bumper && bodyB->listener == (Module*)App->player)
+	//	{
+	//		App->audio->PlayFx(bumperSFX);
+	//		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+	//		
+	//		bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
+	//		b->data->animation.Update();
+	//		//App->player->currentScore += 100;
+	//		return;
+	//	}
+	//	b = b->next;
+	//}
+	//int r = (rand() % 100) / 20;
+	//if (bodyA == sideBump.getFirst()->data->bumper && bodyB->listener == (Module*)App->player)
+	//{
+	//	App->audio->PlayFx(sideBumperSFX);
+	//	bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
+	//	//App->player->currentScore += 10;
+	//	return;
+	//}
+	//if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
+	//{
+	//	App->audio->PlayFx(sideBumperSFX);
+	//	bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
+	//	//App->player->currentScore += 10;
+	//	return;
+	//}
+	//if (bodyA == l && bodyB->listener == (Module*)App->player)
+	//{
+	//	b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+	//	force *= 0.1f;
+	//	bodyB->body->ApplyAngularImpulse(force.y, true);
+	//}
 }
 
 // Update: draw background
@@ -356,6 +360,8 @@ update_status ModuleSceneGame::Update()
 			p = p->next;
 		}
 	}
+
+
 	piston.mobile->body->ApplyForce({ 0,-18 }, { 0,0 }, true);
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
@@ -382,16 +388,7 @@ update_status ModuleSceneGame::Update()
 	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
 	pRight->Rect->GetPosition(x, y);
 	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pRight->Rect->GetRotation());
-	if (oraLeft)
-	{
-		App->renderer->Blit(oraL, 190, 828, NULL);
-		
-	}
-	if(oraRight)
-	{
-		App->renderer->Blit(oraR, 190, 828, NULL);
-		
-	}
+	
 	
 	
 

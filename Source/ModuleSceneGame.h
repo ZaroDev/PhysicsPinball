@@ -54,6 +54,8 @@ public:
 
 	int dioFX;
 	int oraSFX;
+	int bumperSFX;
+	int sideBumperSFX;
 
 	SDL_Texture* oraL;
 	SDL_Texture* oraR;
