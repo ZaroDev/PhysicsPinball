@@ -35,112 +35,79 @@ bool ModuleSceneGame::Start()
 	App->player->Enable();
 
 	openDoor = true;
-	chains.add(App->physics->CreateChain(0, 0, borders, 30, STATIC));
-	//chains.add(App->physics->CreateChain(0, 0, staticBody03, 70, STATIC));		// midle thing of dio
-	//
-	//// down chains
-	//Bumper* chdl = new Bumper;
-	//chdl->bumper = App->physics->CreateChain(0, 0, staticBody01, 18, STATIC);
-	//chdl->bumper->listener = this;
-	//sideBump.add(chdl);
+	chains.add(App->physics->CreateChain(0, 0, borders, 134, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, limitRight, 12, STATIC));
+	chains.add(App->physics->CreateChain(0, 0, limitLeft, 12, STATIC));
+	
+	// down chains
+	Bumper* chdl = new Bumper;
+	chdl->bumper = App->physics->CreateChain(0, 0, leftBumper, 10, STATIC);
+	chdl->bumper->listener = this;
+	sideBump.add(chdl);
 
-	//Bumper* chdr = new Bumper;
-	//chdr->bumper = App->physics->CreateChain(0, 0, staticBody02, 18, STATIC);
-	//chdr->bumper->listener = this;
-	//sideBump.add(chdr);
-
-
-	//// midle chains 
-	//Bumper* chml = new Bumper;
-	//chml->bumper=App->physics->CreateChain(0, 0, staticBody04, 52, STATIC);
-	//chml->bumper->listener = this;
-	//bumpers.add(chml);
-
-	//Bumper* chmr = new Bumper;
-	//chmr->bumper = App->physics->CreateChain(0, 0, staticBody06, 52, STATIC);
-	//chmr->bumper->listener = this;
-	//bumpers.add(chmr);
+	Bumper* chdr = new Bumper;
+	chdr->bumper = App->physics->CreateChain(0, 0, rightBumper, 10, STATIC);
+	chdr->bumper->listener = this;
+	sideBump.add(chdr);
 
 
-	//// up chains
-	//Bumper* chul = new Bumper;
-	//chul->bumper = App->physics->CreateChain(0, 0, staticBody05, 52, STATIC);
-	//chul->bumper->listener = this;
-	//bumpers.add(chul);
-
-	//Bumper* chur = new Bumper;
-	//chur->bumper = App->physics->CreateChain(0, 0, staticBody07, 52, STATIC);
-	//chur->bumper->listener = this;
-	//bumpers.add(chur);
-
-
-	//// Scene Borders
-	//chains.add(App->physics->CreateChain(0, 0, midleBorder, 30, STATIC));
-	//chains.add(App->physics->CreateChain(0, 0, rightBorder, 58, STATIC));
-	//chains.add(App->physics->CreateChain(0, 0, leftBorder, 24, STATIC));
-
-	//circles.add(App->physics->CreateCircle(60, 125, 13, STATIC));
-
-	//upper circles
 	Bumper* top1 = new Bumper;
-	top1->bumper = App->physics->CreateCircle(180, 100, 28, STATIC);
+	top1->bumper = App->physics->CreateCircle(243, 132, 10, STATIC);
 	top1->bumper->listener = this;
 
 	bumpers.add(top1);
 
 	Bumper* top2 = new Bumper;
-	top2->bumper = App->physics->CreateCircle(295, 100, 28, STATIC);
+	top2->bumper = App->physics->CreateCircle(205, 145, 7, STATIC);
 	top2->bumper->listener = this;
 
 	bumpers.add(top2);
 
 	Bumper* top3 = new Bumper;
-	top3->bumper = App->physics->CreateCircle(213, 138, 10, STATIC);
+	top3->bumper = App->physics->CreateCircle(175, 158, 6, STATIC);
 	top3->bumper->listener = this;
 
 	bumpers.add(top3);
 	
 	Bumper* top4 = new Bumper;
-	top4->bumper = App->physics->CreateCircle(262, 138, 10, STATIC);
+	top4->bumper = App->physics->CreateCircle(205, 181, 6, STATIC);
 	top4->bumper->listener = this;
 
 	bumpers.add(top4);
 
-
-	//midle circles
 	Bumper* mid1 = new Bumper;
-	mid1->bumper = App->physics->CreateCircle(123, 250, 50, STATIC);
+	mid1->bumper = App->physics->CreateCircle(254, 181, 6, STATIC);
 	mid1->bumper->listener = this;
 
 	bumpers.add(mid1);
 
 	Bumper* mid2 = new Bumper;
-	mid2->bumper = App->physics->CreateCircle(350, 250, 50, STATIC);
+	mid2->bumper = App->physics->CreateCircle(225, 225, 6, STATIC);
 	mid2->bumper->listener = this;
 
 	bumpers.add(mid2);
 	
-	//down circles
+
 	Bumper* d1 = new Bumper;
-	d1->bumper = App->physics->CreateCircle(28, 538, 8, STATIC);
+	d1->bumper = App->physics->CreateCircle(275, 224, 6, STATIC);
 	d1->bumper->listener = this;
 
 	bumpers.add(d1);
 
 	Bumper* d2 = new Bumper;
-	d2->bumper = App->physics->CreateCircle(447, 538, 8, STATIC);
+	d2->bumper = App->physics->CreateCircle(276, 304, 28, STATIC);
 	d2->bumper->listener = this;
 
 	bumpers.add(d2);
 
 	Bumper* d3 = new Bumper;
-	d3->bumper = App->physics->CreateCircle(56, 575, 23, STATIC);
+	d3->bumper = App->physics->CreateCircle(212, 380, 28, STATIC);
 	d3->bumper->listener = this;
 
 	bumpers.add(d3);
 
 	Bumper* d4 = new Bumper;
-	d4->bumper = App->physics->CreateCircle(418, 575, 23, STATIC);
+	d4->bumper = App->physics->CreateCircle(332, 385, 28, STATIC);
 	d4->bumper->listener = this;
 
 	bumpers.add(d4);
@@ -158,29 +125,32 @@ bool ModuleSceneGame::Start()
 	CreateSensor(App->physics->CreateCircleSensor(365+16, 515+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateCircleSensor(104+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateCircleSensor(343+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
-	CreateSensor(App->physics->CreateRectangleSensor(485, 500, 20, 8, STATIC), Sensor::START, true);
+	CreateSensor(App->physics->CreateRectangleSensor(455, 500, 20, 8, STATIC), Sensor::START, true);
 	l = new PhysBody();
 	l = App->physics->CreateRectangle(435, 120, 10, 50, STATIC);
 	limit.add(l);
 
 	pLeft = new Puller();
 	pRight = new Puller();
-
-	pLeft->Rect = App->physics->CreateRectangle(190, 828, 50, 12, DYNAMIC);
-	pRight->Rect = App->physics->CreateRectangle(277, 828, 50, 12, DYNAMIC);
+	
+	pLeft->Rect = App->physics->CreateRectangle(165, 840, 60, 12, DYNAMIC);
+	pRight->Rect = App->physics->CreateRectangle(314, 840, 60, 12, DYNAMIC);
 	pLeft->Rect->body->SetAwake(true);
 	pRight->Rect->body->SetAwake(true);
 	pLeft->Rect->listener = this;
 	pRight->Rect->listener = this;
 	pRight->rightSide = true;
 	pLeft->rightSide = false;
-	cLeft = App->physics->CreateCircle(170, 828, 2, STATIC);
-	cRight= App->physics->CreateCircle(295, 828, 2, STATIC);
+	cLeft = App->physics->CreateCircle(170, 842, 2, STATIC);
+	cRight= App->physics->CreateCircle(310, 842, 2, STATIC);
 	App->physics->CreateRevoluteJoint(cLeft, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
 	App->physics->CreateRevoluteJoint(cRight, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, true, true);
 
-	piston.pivot = App->physics->CreateRectangle(485, 894, 20, 8, STATIC);
-	piston.mobile = App->physics->CreateRectangle(485, 794, 20, 8, DYNAMIC);
+	/*App->physics->CreateRectangle(445, 795, 8, 5, STATIC);
+	App->physics->CreateRectangle(465, 795, 8, 5, STATIC);*/
+
+	piston.pivot = App->physics->CreateRectangle(455, 894, 8, 8, STATIC);
+	piston.mobile = App->physics->CreateRectangle(455, 794, 8, 8, DYNAMIC);
 	App->physics->CreatePrismaticJoint(piston.mobile, { 0,0 }, piston.pivot, { 0,0 }, { 0,1 }, 1.9f, false, true);
 
 	pullers.add(pLeft);
@@ -215,105 +185,105 @@ bool ModuleSceneGame::CleanUp()
 
 void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	//p2List_item<Sensor*>* s = sensors.getFirst();
+	p2List_item<Sensor*>* s = sensors.getFirst();
 
-	//while (s != NULL)
-	//{
+	while (s != NULL)
+	{
 
-	//	if (bodyA == s->data->sensor && bodyB->listener == (Module*)App->player && s->data->isActive)
-	//	{
-	//		
-	//		if (s->data->value == Sensor::DEATH)
-	//		{
-	//			App->player->lives--;
-	//			App->player->spawnBall = true;
-	//			s->data->isActive = false;
+		if (bodyA == s->data->sensor && bodyB->listener == (Module*)App->player && s->data->isActive)
+		{
+			
+			if (s->data->value == Sensor::DEATH)
+			{
+				App->player->lives--;
+				App->player->spawnBall = true;
+				s->data->isActive = false;
 
-	//		}
-	//		if (s->data->value == Sensor::START)
-	//		{
-	//			p2List_item<Sensor*>* reset = sensors.getFirst();
-	//			while (reset != NULL)
-	//			{
-	//				s->data->isActive = false;
-	//				reset->data->isActive = true;
-	//				reset = reset->next;
+			}
+			if (s->data->value == Sensor::START)
+			{
+				p2List_item<Sensor*>* reset = sensors.getFirst();
+				while (reset != NULL)
+				{
+					s->data->isActive = false;
+					reset->data->isActive = true;
+					reset = reset->next;
 
-	//			}
-	//			openDoor = true;
-	//			
-	//		}
-	//		
-	//		if (s->data->value == Sensor::CLOSE)
-	//		{
-	//			openDoor = false;
-	//		}
-	//		if (s->data->value == Sensor::DIO)
-	//		{
-	//			App->audio->PlayFx(dioFX);
-	//			s->data->isActive = false;
-	//		}
+				}
+				openDoor = true;
+				
+			}
+			
+			if (s->data->value == Sensor::CLOSE)
+			{
+				openDoor = false;
+			}
+			if (s->data->value == Sensor::DIO)
+			{
+				App->audio->PlayFx(dioFX);
+				s->data->isActive = false;
+			}
 
-	//	}
+		}
 
-	//	s = s->next;
+		s = s->next;
 
-	//}
-	//p2List_item<Puller*>* p = pullers.getFirst();
-	//while (p != NULL)
-	//{
-	//	if (bodyA == p->data->Rect && p->data->rightSide == false && bodyB->listener == (Module*)App->player)
-	//	{
-	//		App->audio->PlayFx(oraSFX);
-	//		oraLeft = true;
-	//		App->renderer->Blit(oraL, 150, 728, NULL);
-	//	}
-	//	if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
-	//	{
-	//		App->audio->PlayFx(oraSFX);
-	//		oraRight = true;
-	//		App->renderer->Blit(oraR, 270, 728, NULL);
-	//	}
-	//	p = p->next;
-	//}
-	//p2List_item<Bumper*>* b = bumpers.getFirst();
-	//
-	//while (b != NULL)
-	//{
+	}
+	p2List_item<Puller*>* p = pullers.getFirst();
+	while (p != NULL)
+	{
+		if (bodyA == p->data->Rect && p->data->rightSide == false && bodyB->listener == (Module*)App->player)
+		{
+			App->audio->PlayFx(oraSFX);
+			oraLeft = true;
+			App->renderer->Blit(oraL, 150, 728, NULL);
+		}
+		if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
+		{
+			App->audio->PlayFx(oraSFX);
+			oraRight = true;
+			App->renderer->Blit(oraR, 270, 728, NULL);
+		}
+		p = p->next;
+	}
+	p2List_item<Bumper*>* b = bumpers.getFirst();
+	
+	while (b != NULL)
+	{
 
- //		if (bodyA == b->data->bumper && bodyB->listener == (Module*)App->player)
-	//	{
-	//		App->audio->PlayFx(bumperSFX);
-	//		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-	//		
-	//		bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
-	//		b->data->animation.Update();
-	//		//App->player->currentScore += 100;
-	//		return;
-	//	}
-	//	b = b->next;
-	//}
-	//int r = (rand() % 100) / 20;
-	//if (bodyA == sideBump.getFirst()->data->bumper && bodyB->listener == (Module*)App->player)
-	//{
-	//	App->audio->PlayFx(sideBumperSFX);
-	//	bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
-	//	//App->player->currentScore += 10;
-	//	return;
-	//}
-	//if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
-	//{
-	//	App->audio->PlayFx(sideBumperSFX);
-	//	bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
-	//	//App->player->currentScore += 10;
-	//	return;
-	//}
-	//if (bodyA == l && bodyB->listener == (Module*)App->player)
-	//{
-	//	b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
-	//	force *= 0.1f;
-	//	bodyB->body->ApplyAngularImpulse(force.y, true);
-	//}
+ 		if (bodyA == b->data->bumper && bodyB->listener == (Module*)App->player)
+		{
+			App->audio->PlayFx(bumperSFX);
+			b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+			force *= 2;
+			bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
+			b->data->animation.Update();
+			//App->player->currentScore += 100;
+			return;
+		}
+		b = b->next;
+	}
+	int r = (rand() % 100) / 20;
+	if (bodyA == sideBump.getFirst()->data->bumper && bodyB->listener == (Module*)App->player)
+	{
+		App->audio->PlayFx(sideBumperSFX);
+		bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
+		//App->player->currentScore += 10;
+		return;
+	}
+	if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
+	{
+		App->audio->PlayFx(sideBumperSFX);
+		bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
+		//App->player->currentScore += 10;
+		return;
+	}
+	if (bodyA == l && bodyB->listener == (Module*)App->player)
+	{
+		b2Vec2 force(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+		force *= 0.1f;
+		bodyB->body->ApplyAngularImpulse(force.y, true);
+	}
 }
 
 // Update: draw background
@@ -369,7 +339,7 @@ update_status ModuleSceneGame::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
-		piston.mobile->body->ApplyForce({ 0, -60 }, { 0,0 }, true);
+		piston.mobile->body->ApplyForce({ 0, -50 }, { 0,0 }, true);
 	}
 
 	if (openDoor)

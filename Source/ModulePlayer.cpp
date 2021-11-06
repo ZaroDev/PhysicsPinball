@@ -47,7 +47,7 @@ update_status ModulePlayer::Update()
 		b2Body* b = App->physics->world->CreateBody(&body);
 
 		b2CircleShape shape;
-		shape.m_radius = PIXEL_TO_METERS(13);
+		shape.m_radius = PIXEL_TO_METERS(8);
 		b2FixtureDef fixture;
 		fixture.shape = &shape;
 		fixture.density = 1.0f;
@@ -57,7 +57,7 @@ update_status ModulePlayer::Update()
 		PhysBody* pbody = new PhysBody();
 		pbody->body = b;
 		b->SetUserData(pbody);
-		pbody->width = pbody->height = 13;
+		pbody->width = pbody->height = 8;
 		ballCol.add(pbody);
 		
 		ballCol.getLast()->data->listener = this;
@@ -68,12 +68,12 @@ update_status ModulePlayer::Update()
 
 		body.type = b2_dynamicBody;
 
-		body.position.Set(PIXEL_TO_METERS(485), PIXEL_TO_METERS(700));
+		body.position.Set(PIXEL_TO_METERS(459), PIXEL_TO_METERS(770));
 
 		b2Body* b = App->physics->world->CreateBody(&body);
 
 		b2CircleShape shape;
-		shape.m_radius = PIXEL_TO_METERS(13);
+		shape.m_radius = PIXEL_TO_METERS(8);
 		b2FixtureDef fixture;
 		fixture.shape = &shape;
 		fixture.density = 1.0f;
@@ -83,7 +83,7 @@ update_status ModulePlayer::Update()
 		PhysBody* pbody = new PhysBody();
 		pbody->body = b;
 		b->SetUserData(pbody);
-		pbody->width = pbody->height = 13;
+		pbody->width = pbody->height = 8;
 		ballCol.add(pbody);
 		
 		ballCol.getLast()->data->listener = this;
@@ -98,6 +98,19 @@ update_status ModulePlayer::Update()
 		c->data->GetPosition(x, y);
 		
 		App->renderer->Blit(ball, x, y, NULL, 1.0f, c->data->GetRotation());
+
+		
+		c = c->next;
+	}
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		if (y > 1000)
+		{
+			App->physics->world->DestroyBody(c->data->body);
+			LOG("DELETED BALL");
+		}
 		c = c->next;
 	}
 	
