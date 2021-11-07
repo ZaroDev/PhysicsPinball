@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleUi.h"
 
 ModuleSceneEnding::ModuleSceneEnding(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -58,11 +59,15 @@ update_status ModuleSceneEnding::Update()
 	if (counter < 540 && counter > 270)
 	{
 		if ((counter / 60) % 2 == 0)
+		{
 			App->renderer->Blit(highscore, 125, 200);
+			App->ui->DrawHighScore();
+		}
 	}
 	else if(counter > 270)
 	{
 		App->renderer->Blit(highscore, 125, 200);
+		App->ui->DrawHighScore();
 	}
 	if ((counter / 60) % 2 == 0)
 		App->renderer->Blit(playAgain, 30, 564);

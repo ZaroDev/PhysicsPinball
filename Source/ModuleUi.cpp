@@ -42,13 +42,7 @@ bool ModuleUi::Start() {
 update_status ModuleUi::Update()
 {
 	if (App->scene_game->IsEnabled() == true) Draw();
-	if (App->scene_ending->IsEnabled() == true)
-	{
-		SString text("%7d", highScore);
-		if (highScore < 0)text = "0000000";
-		if (highScore > 9999999) text = "9999999";
-		App->fonts->BlitText(32, 250, 4, text.GetString());
-	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -109,6 +103,7 @@ void ModuleUi::Draw()
 
 }
 
+
 void ModuleUi::AddScore(int value)
 {
 	score += value;
@@ -123,4 +118,12 @@ void ModuleUi::UpdateScores()
 	if (score > highScore)highScore = score;
 	score = 0;
 
+}
+
+void ModuleUi::DrawHighScore()
+{
+	SString text("%7d", highScore);
+	if (highScore < 0)text = "0000000";
+	if (highScore > 9999999) text = "9999999";
+	App->fonts->BlitText(32, 250, 4, text.GetString());
 }

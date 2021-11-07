@@ -14,6 +14,7 @@ public:
 
 	void AddScore(int value);
 	void Draw();
+	void DrawHighScore();
 	void UpdateScores();
 
 	bool Start();
