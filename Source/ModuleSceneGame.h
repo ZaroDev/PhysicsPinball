@@ -68,6 +68,7 @@ public:
 	int sideBumperSFX;
 	int boxSFX;
 	int comboSFX;
+	int deadSFX;
 
 	SDL_Texture* oraL;
 	SDL_Texture* oraR;
