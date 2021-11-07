@@ -26,3 +26,8 @@
 - Side bumpers not working properly, since we couldn't solve that we decided that giving a random number to the force was a funny mechanic.
 - Spring not colliding with the ball, unfortunally if the force bettween the ball and the spring is too high the ball just don't collide with the spring needing to restart the level
 - Pullers not colliding with the ball, the same that happends with the spring but in the pullers. 
+
+### Game made by 
+- Victor Falcon
+- Sofia Liles
+- Laura Isidro
