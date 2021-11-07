@@ -28,6 +28,7 @@ bool ModuleSceneGame::Start()
 
 	App->audio->PlayMusic("pinball/Music/gameMusic.ogg");
 	background = App->textures->Load("pinball/Backgrounds/placeholder.png");
+	boxImg = App->textures->Load("pinball/Sprites/box.png");
 	leftP = App->textures->Load("pinball/Sprites/leftP.png");
 	rightP = App->textures->Load("pinball/Sprites/rightP.png");
 
@@ -123,20 +124,20 @@ bool ModuleSceneGame::Start()
 	bumpers.add(h2);
 
 	Box* box1 = new Box();
-	box1->body = App->physics->CreateRectangle(60, 310, 24, 24, STATIC);
+	box1->body = App->physics->CreateRectangle(60, 310, 20, 20, STATIC);
 	box1->body->listener = this;
 
 	boxes.add(box1);
 
 	Box* box2 = new Box();
-	box2->body = App->physics->CreateRectangle(50, 280, 24, 24, STATIC);
+	box2->body = App->physics->CreateRectangle(50, 280, 20, 20, STATIC);
 	box2->body->listener = this;
 
 	boxes.add(box2);
 
 
 	Box* box3 = new Box();
-	box3->body = App->physics->CreateRectangle(40, 250, 24, 24, STATIC);
+	box3->body = App->physics->CreateRectangle(42, 250, 20, 20, STATIC);
 	box3->body->listener = this;
 
 	boxes.add(box3);
@@ -447,6 +448,9 @@ update_status ModuleSceneGame::Update()
 	
 	while (box != NULL)
 	{
+		int x, y;
+		box->data->body->GetPosition(x, y);
+		App->renderer->Blit(boxImg, x, y, NULL);
 		if (box->data->setDestruction)
 		{
 			box->data->body->body->SetTransform({ -100, -100 }, 0);
