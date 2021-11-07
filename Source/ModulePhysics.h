@@ -62,11 +62,17 @@ public:
 	PhysBody* CreateCircleSensor(int x, int y, int radius, bodyType type);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+	void CreateScenarioGround();
 
 	b2World* world;
 private:
 
+	// Debug mode
 	bool debug;
-	b2MouseJoint* mouse_joint;
+
 	b2Body* ground;
+
+	// Mouse joint
+	b2MouseJoint* mouse_joint;
+	b2Body* mouse_body;
 };
