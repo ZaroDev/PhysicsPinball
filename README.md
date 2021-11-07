@@ -11,14 +11,14 @@
 ## COMBOS
 ### The game currently have two combos, one if you destroy all the gears on the right and the other is when you destroy all the gears on the left and hit the end of the tunnel
 
-## Features
+## FEATURES
 - Amazing Jojo references
 - Fast pinball gameplay
 - 60 FPS even in a toaster
 - Za worldo combo
 - Ora ora
 
-## Bugs
+## BUGS
 - The collisions not working properly, we changed the provided code with the correct one the collision solver was only sending the first object fixture to the OnCollision function.
 - Frame rate limiter, we implemented a frame time limit on the main code in order to run at 60 FPS.
 - Objects can't be destroyed on a callback function, we instead moved the objects.
