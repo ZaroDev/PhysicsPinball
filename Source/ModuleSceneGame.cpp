@@ -210,7 +210,7 @@ bool ModuleSceneGame::Start()
 	sideBumperSFX = App->audio->LoadFx("pinball/SFX/sideBumperSFX.wav");
 	boxSFX = App->audio->LoadFx("pinball/SFX/boxHit.wav");
 	comboSFX = App->audio->LoadFx("pinball/SFX/comboSFX.wav");
-
+	deadSFX = App->audio->LoadFx("pinball/SFX/ohNoSFX.wav");
 
 
 	oraL = App->textures->Load("pinball/FX/oraoraL.png");
@@ -270,6 +270,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 				App->player->lives--;
 				App->player->spawnBall = true;
 				s->data->isActive = false;
+				App->audio->PlayFx(deadSFX);
 
 			}
 			if (s->data->value == Sensor::START)
