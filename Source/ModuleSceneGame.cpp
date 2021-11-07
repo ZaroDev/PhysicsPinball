@@ -217,7 +217,7 @@ bool ModuleSceneGame::Start()
 	oraLeft = false;
 	oraRight = false;
 
-	boxI = boxes.getFirst();
+
 
 	return ret;
 }
@@ -231,8 +231,22 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(leftP);
 	App->textures->Unload(rightP);
 	App->textures->Unload(background);
+	App->textures->Unload(oraR);
+	App->textures->Unload(oraL);
 	delete pLeft;
 	delete pRight;
+	delete cLeft;
+	delete cRight;
+	circles.clear();
+	chains.clear();
+	pullers.clear();
+	bumpers.clear();
+	sideBump.clear();
+	sensors.clear();
+	boxes.clear();
+	limit.clear();
+	delete l;
+	App->player->Disable();
 
 	return true;
 }

@@ -91,7 +91,7 @@ public:
 	p2List<Sensor*> sensors;
 	//Boxes
 	p2List<Box*> boxes;
-	p2List_item<Box*>* boxI;
+
 	int frames = 0;
 	int combo = 0;
 	p2List<PhysBody*> limit;
