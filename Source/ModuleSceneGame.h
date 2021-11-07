@@ -5,7 +5,15 @@
 #include "p2Point.h"
 #include "ModulePhysics.h"
 #include "Animation.h"
-
+struct Box {
+	PhysBody* body;
+	bool setDestruction = false;
+	enum Type {
+		NONE = -1,
+		COMBO
+	};
+	Type type = NONE;
+};
 
 struct Puller
 {
@@ -56,6 +64,8 @@ public:
 	int oraSFX;
 	int bumperSFX;
 	int sideBumperSFX;
+	int boxSFX;
+	int comboSFX;
 
 	SDL_Texture* oraL;
 	SDL_Texture* oraR;
@@ -64,7 +74,7 @@ public:
 	SDL_Texture* rightP;
 
 	p2List<PhysBody*> circles;
-	p2List<PhysBody*> boxes;
+
 	p2List<PhysBody*> chains;
 
 	//Puller Objects
@@ -76,9 +86,14 @@ public:
 	Piston piston;
 	p2List<Bumper*> bumpers;
 	p2List<Bumper*> sideBump;
+
 	//Senors
 	p2List<Sensor*> sensors;
-
+	//Boxes
+	p2List<Box*> boxes;
+	p2List_item<Box*>* boxI;
+	int frames = 0;
+	int combo = 0;
 	p2List<PhysBody*> limit;
 	bool openDoor;
 	PhysBody* l;

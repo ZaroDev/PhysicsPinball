@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "Cordinates.h"
+#include "ModuleUi.h"
 #include "ModulePlayer.h"
 
 ModuleSceneGame::ModuleSceneGame(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -112,45 +113,91 @@ bool ModuleSceneGame::Start()
 
 	bumpers.add(d4);
 
+	Bumper* h1 = new Bumper;
+	h1->bumper = App->physics->CreateCircle(401, 593, 16, STATIC);
+	h1->bumper->listener = this;
+	bumpers.add(h1);
+	Bumper* h2 = new Bumper;
+	h2->bumper = App->physics->CreateCircle(409, 378, 14, STATIC);
+	h2->bumper->listener = this;
+	bumpers.add(h2);
 
+	Box* box1 = new Box();
+	box1->body = App->physics->CreateRectangle(60, 310, 24, 24, STATIC);
+	box1->body->listener = this;
+
+	boxes.add(box1);
+
+	Box* box2 = new Box();
+	box2->body = App->physics->CreateRectangle(50, 280, 24, 24, STATIC);
+	box2->body->listener = this;
+
+	boxes.add(box2);
+
+
+	Box* box3 = new Box();
+	box3->body = App->physics->CreateRectangle(40, 250, 24, 24, STATIC);
+	box3->body->listener = this;
+
+	boxes.add(box3);
+
+	Box* box4 = new Box();
+	box4->body = App->physics->CreateRectangle(404, 415, 20, 20, STATIC);
+	box4->body->listener = this;
+	box4->type = Box::COMBO;
+	boxes.add(box4);
+
+	Box* box5 = new Box();
+	box5->body = App->physics->CreateRectangle(409, 445, 20, 20, STATIC);
+	box5->body->listener = this;
+	box5->type = Box::COMBO;
+	boxes.add(box5);
+
+	Box* box6 = new Box();
+	box6->body = App->physics->CreateRectangle(409, 475, 20, 20, STATIC);
+	box6->body->listener = this;
+	box6->type = Box::COMBO;
+
+	boxes.add(box6);
+
+	Box* box7 = new Box();
+	box7->body = App->physics->CreateRectangle(404, 505, 20, 20, STATIC);
+	box7->body->listener = this;
+	box7->type = Box::COMBO;
+
+	boxes.add(box7);
 
 	CreateSensor(App->physics->CreateRectangleSensor(0, 924, 1000, 1, STATIC), Sensor::DEATH, true);
-	CreateSensor(App->physics->CreateRectangleSensor(241, 540, 21, 14, STATIC), Sensor::DIO, true);
+	CreateSensor(App->physics->CreateRectangleSensor(35, 219, 21, 14, STATIC), Sensor::DIO, true);
 
-	CreateSensor(App->physics->CreateRectangleSensor(405, 120, 20, 77, STATIC), Sensor::CLOSE, true);
+	CreateSensor(App->physics->CreateRectangleSensor(302, 129, 12, 20, STATIC), Sensor::CLOSE, true);
 
-
-	CreateSensor(App->physics->CreateCircleSensor(238, 59, 16, STATIC), Sensor::BUTTON, true);
-	CreateSensor(App->physics->CreateCircleSensor(97, 515+16, 14, STATIC), Sensor::BUTTON, true);
-	CreateSensor(App->physics->CreateCircleSensor(365+16, 515+16, 14, STATIC), Sensor::BUTTON, true);
-	CreateSensor(App->physics->CreateCircleSensor(104+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
-	CreateSensor(App->physics->CreateCircleSensor(343+16, 589+16, 14, STATIC), Sensor::BUTTON, true);
 	CreateSensor(App->physics->CreateRectangleSensor(455, 500, 20, 8, STATIC), Sensor::START, true);
 	l = new PhysBody();
-	l = App->physics->CreateRectangle(435, 120, 10, 50, STATIC);
+	l = App->physics->CreateRectangle(-100, -100, 12, 30, STATIC);
 	limit.add(l);
 
 	pLeft = new Puller();
 	pRight = new Puller();
 	
-	pLeft->Rect = App->physics->CreateRectangle(165, 840, 60, 12, DYNAMIC);
-	pRight->Rect = App->physics->CreateRectangle(314, 840, 60, 12, DYNAMIC);
+	pLeft->Rect = App->physics->CreateRectangle(170, 845, 70, 10, DYNAMIC);
+	pRight->Rect = App->physics->CreateRectangle(314, 845, 70, 10, DYNAMIC);
 	pLeft->Rect->body->SetAwake(true);
 	pRight->Rect->body->SetAwake(true);
 	pLeft->Rect->listener = this;
 	pRight->Rect->listener = this;
 	pRight->rightSide = true;
 	pLeft->rightSide = false;
-	cLeft = App->physics->CreateCircle(170, 842, 2, STATIC);
-	cRight= App->physics->CreateCircle(310, 842, 2, STATIC);
+	cLeft = App->physics->CreateCircle(167, 845, 2, STATIC);
+	cRight= App->physics->CreateCircle(310, 845, 2, STATIC);
 	App->physics->CreateRevoluteJoint(cLeft, { 0, 0 }, pLeft->Rect, {-0.5, 0}, 35.0f, true, true);
 	App->physics->CreateRevoluteJoint(cRight, { 0, 0 }, pRight->Rect, { 0.5, 0 }, 35.0f, true, true);
 
 	/*App->physics->CreateRectangle(445, 795, 8, 5, STATIC);
 	App->physics->CreateRectangle(465, 795, 8, 5, STATIC);*/
 
-	piston.pivot = App->physics->CreateRectangle(455, 894, 8, 8, STATIC);
-	piston.mobile = App->physics->CreateRectangle(455, 794, 8, 8, DYNAMIC);
+	piston.pivot = App->physics->CreateRectangle(453, 894, 15, 4, STATIC);
+	piston.mobile = App->physics->CreateRectangle(453, 794, 15, 4, DYNAMIC);
 	App->physics->CreatePrismaticJoint(piston.mobile, { 0,0 }, piston.pivot, { 0,0 }, { 0,1 }, 1.9f, false, true);
 
 	pullers.add(pLeft);
@@ -160,11 +207,18 @@ bool ModuleSceneGame::Start()
 	oraSFX = App->audio->LoadFx("pinball/SFX/ora.wav");
 	bumperSFX = App->audio->LoadFx("pinball/SFX/bumperSFX.wav");
 	sideBumperSFX = App->audio->LoadFx("pinball/SFX/sideBumperSFX.wav");
+	boxSFX = App->audio->LoadFx("pinball/SFX/boxHit.wav");
+	comboSFX = App->audio->LoadFx("pinball/SFX/comboSFX.wav");
+
+
 
 	oraL = App->textures->Load("pinball/FX/oraoraL.png");
 	oraR = App->textures->Load("pinball/FX/oraoraR.png");
 	oraLeft = false;
 	oraRight = false;
+
+	boxI = boxes.getFirst();
+
 	return ret;
 }
 
@@ -222,6 +276,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			{
 				App->audio->PlayFx(dioFX);
 				s->data->isActive = false;
+				App->ui->AddScore(69420);
 			}
 
 		}
@@ -229,6 +284,20 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		s = s->next;
 
 	}
+	p2List_item<Box*>* box = boxes.getFirst();
+	while(box != NULL)
+	{
+		if (bodyA == box->data->body && bodyB->listener == (Module*)App->player)
+		{
+			box->data->setDestruction = true;
+			App->ui->AddScore(100);
+			App->audio->PlayFx(boxSFX);
+			if (box->data->type == Box::COMBO)
+				combo++;
+		}
+		box = box->next;
+	}
+
 	p2List_item<Puller*>* p = pullers.getFirst();
 	while (p != NULL)
 	{
@@ -236,13 +305,13 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			App->audio->PlayFx(oraSFX);
 			oraLeft = true;
-			App->renderer->Blit(oraL, 150, 728, NULL);
+			
 		}
 		if (bodyA == p->data->Rect && p->data->rightSide == true && bodyB->listener == (Module*)App->player)
 		{
 			App->audio->PlayFx(oraSFX);
 			oraRight = true;
-			App->renderer->Blit(oraR, 270, 728, NULL);
+
 		}
 		p = p->next;
 	}
@@ -258,7 +327,7 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			force *= 2;
 			bodyB->body->ApplyLinearImpulse(force, bodyB->body->GetWorldCenter(), true);
 			b->data->animation.Update();
-			//App->player->currentScore += 100;
+			App->ui->AddScore(100);
 			return;
 		}
 		b = b->next;
@@ -268,14 +337,14 @@ void ModuleSceneGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		App->audio->PlayFx(sideBumperSFX);
 		bodyB->body->ApplyLinearImpulse(b2Vec2(r, -r), bodyB->body->GetWorldCenter(), true);
-		//App->player->currentScore += 10;
+		App->ui->AddScore(50);
 		return;
 	}
 	if (bodyA == sideBump.getLast()->data->bumper && bodyB->listener == (Module*)App->player)
 	{
 		App->audio->PlayFx(sideBumperSFX);
 		bodyB->body->ApplyLinearImpulse(b2Vec2(-r,-r), bodyB->body->GetWorldCenter(), true);
-		//App->player->currentScore += 10;
+		App->ui->AddScore(50);
 		return;
 	}
 	if (bodyA == l && bodyB->listener == (Module*)App->player)
@@ -344,11 +413,11 @@ update_status ModuleSceneGame::Update()
 
 	if (openDoor)
 	{
-		l->body->SetTransform({PIXEL_TO_METERS(535),PIXEL_TO_METERS(120)}, 0);
+		l->body->SetTransform({PIXEL_TO_METERS(-100),PIXEL_TO_METERS(-100)}, 0);
 	}
 	else
 	{
-		l->body->SetTransform({ PIXEL_TO_METERS(435),PIXEL_TO_METERS(120) }, 0);
+		l->body->SetTransform({ PIXEL_TO_METERS(332),PIXEL_TO_METERS(129) }, 0);
 	}
 	
 	
@@ -358,10 +427,57 @@ update_status ModuleSceneGame::Update()
 	App->renderer->Blit(leftP, x, y, NULL, 1.0f, pLeft->Rect->GetRotation());
 	pRight->Rect->GetPosition(x, y);
 	App->renderer->Blit(rightP, x, y, NULL, 1.0f, pRight->Rect->GetRotation());
-	
-	
-	
 
+	p2List_item<Box*>* box = boxes.getFirst();
+	
+	while (box != NULL)
+	{
+		if (box->data->setDestruction)
+		{
+			box->data->body->body->SetTransform({ -100, -100 }, 0);
+			
+		}
+	
+		box = box->next;
+
+	}
+	if (combo >= 4)
+	{
+		App->ui->AddScore(10000);
+		App->audio->PlayFx(comboSFX);
+		combo = 0;
+	}
+
+	if (oraRight)
+	{
+		frames++;
+		if (frames < 60)
+		{
+			App->renderer->Blit(oraR, 270, 728, NULL);
+		}
+		else
+		{
+			oraRight = false;
+			frames = 0;
+		}
+
+	}
+
+
+	if (oraLeft)
+	{
+		frames++;
+		if (frames < 60)
+		{
+			App->renderer->Blit(oraL, 150, 728, NULL);
+		}
+		else
+		{
+			oraLeft = false;
+			frames = 0;
+		}
+
+	}
 	return UPDATE_CONTINUE;
 }
 

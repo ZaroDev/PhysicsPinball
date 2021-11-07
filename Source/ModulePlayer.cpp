@@ -98,21 +98,15 @@ update_status ModulePlayer::Update()
 		c->data->GetPosition(x, y);
 		
 		App->renderer->Blit(ball, x, y, NULL, 1.0f, c->data->GetRotation());
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			App->physics->world->DestroyBody(c->data->body);
 
+		}
 		
 		c = c->next;
 	}
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		if (y > 1000)
-		{
-			App->physics->world->DestroyBody(c->data->body);
-			LOG("DELETED BALL");
-		}
-		c = c->next;
-	}
+	
 	
 
 	return UPDATE_CONTINUE;

@@ -10,7 +10,7 @@
 
 ModuleUi::ModuleUi(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	score = 4520;
+	score = 0;
 	prevScore = 0;
 	highScore = 0;
 
@@ -36,14 +36,14 @@ update_status ModuleUi::Update()
 	
 	// DRAW SCORE
 	SDL_Rect rect = { 0,0,20,19 };
-	if (score >= 99999)
+	if (score >= 999999999)
 	{
-		App->fonts->BlitText(0, 0, 0, "99999");
+		App->fonts->BlitText(0, 0, 0, "999999999");
 	}
 	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
 	else
 	{
-		SString text("%5d", score);
+		SString text("%9d", score);
 		App->fonts->BlitText(0, 0, 0, text.GetString());	
 	}
 
