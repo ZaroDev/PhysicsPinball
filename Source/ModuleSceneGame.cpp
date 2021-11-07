@@ -31,7 +31,7 @@ bool ModuleSceneGame::Start()
 	boxImg = App->textures->Load("pinball/Sprites/box.png");
 	leftP = App->textures->Load("pinball/Sprites/leftP.png");
 	rightP = App->textures->Load("pinball/Sprites/rightP.png");
-
+	spring = App->textures->Load("pinball/Sprites/spring.png");
 	
 	App->physics->Enable();
 	App->player->Enable();
@@ -197,8 +197,8 @@ bool ModuleSceneGame::Start()
 	/*App->physics->CreateRectangle(445, 795, 8, 5, STATIC);
 	App->physics->CreateRectangle(465, 795, 8, 5, STATIC);*/
 
-	piston.pivot = App->physics->CreateRectangle(453, 894, 15, 10, STATIC);
-	piston.mobile = App->physics->CreateRectangle(453, 794, 15, 10, DYNAMIC);
+	piston.pivot = App->physics->CreateRectangle(455, 894, 15, 10, STATIC);
+	piston.mobile = App->physics->CreateRectangle(455, 794, 15, 10, DYNAMIC);
 	App->physics->CreatePrismaticJoint(piston.mobile, { 0,0 }, piston.pivot, { 0,0 }, { 0,1 }, 1.9f, false, true);
 
 	pullers.add(pLeft);
@@ -235,6 +235,8 @@ bool ModuleSceneGame::CleanUp()
 	App->textures->Unload(background);
 	App->textures->Unload(oraR);
 	App->textures->Unload(oraL);
+	App->textures->Unload(spring);
+	App->textures->Unload(boxImg);
 	delete pLeft;
 	delete pRight;
 	delete cLeft;
@@ -436,6 +438,12 @@ update_status ModuleSceneGame::Update()
 		l->body->SetTransform({ PIXEL_TO_METERS(332),PIXEL_TO_METERS(129) }, 0);
 	}
 	
+	if (combo >= 4)
+	{
+		App->ui->AddScore(10000);
+		App->audio->PlayFx(comboSFX);
+		combo = 0;
+	}
 	
 	App->renderer->Blit(background, 0, 0);
 	int x, y;
@@ -460,13 +468,8 @@ update_status ModuleSceneGame::Update()
 		box = box->next;
 
 	}
-	if (combo >= 4)
-	{
-		App->ui->AddScore(10000);
-		App->audio->PlayFx(comboSFX);
-		combo = 0;
-	}
-
+	piston.mobile->GetPosition(x, y);
+	App->renderer->Blit(spring, x, y, NULL, 1.0f, piston.mobile->GetRotation());
 	if (oraRight)
 	{
 		frames++;

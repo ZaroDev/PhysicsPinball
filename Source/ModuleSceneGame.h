@@ -59,6 +59,7 @@ class ModuleSceneGame : public Module
 public:
 	SDL_Texture* background;
 	SDL_Texture* boxImg;
+	SDL_Texture* spring;
 	int score;
 
 	int dioFX;
