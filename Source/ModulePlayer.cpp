@@ -4,7 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-
+#include "ModuleUi.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -18,7 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	lives = 3;
-	ball = App->textures->Load("pinball/Sprites/ballxd.png");
+	ball = App->textures->Load("pinball/Sprites/ball.png");
 	
 	spawnBall = true;
 	return true;
@@ -29,6 +29,7 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 	App->textures->Unload(ball);
+	ballCol.clear();
 
 	return true;
 }
@@ -88,6 +89,8 @@ update_status ModulePlayer::Update()
 		
 		ballCol.getLast()->data->listener = this;
 		spawnBall = false;
+
+		App->ui->UpdateScores();
 	}
 	
 	p2List_item<PhysBody*>* c = ballCol.getFirst();

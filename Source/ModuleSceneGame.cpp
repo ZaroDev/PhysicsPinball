@@ -196,8 +196,8 @@ bool ModuleSceneGame::Start()
 	/*App->physics->CreateRectangle(445, 795, 8, 5, STATIC);
 	App->physics->CreateRectangle(465, 795, 8, 5, STATIC);*/
 
-	piston.pivot = App->physics->CreateRectangle(453, 894, 15, 4, STATIC);
-	piston.mobile = App->physics->CreateRectangle(453, 794, 15, 4, DYNAMIC);
+	piston.pivot = App->physics->CreateRectangle(453, 894, 15, 10, STATIC);
+	piston.mobile = App->physics->CreateRectangle(453, 794, 15, 10, DYNAMIC);
 	App->physics->CreatePrismaticJoint(piston.mobile, { 0,0 }, piston.pivot, { 0,0 }, { 0,1 }, 1.9f, false, true);
 
 	pullers.add(pLeft);
@@ -226,8 +226,9 @@ bool ModuleSceneGame::Start()
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
-	App->physics->Disable();
+
 	App->player->Disable();
+	App->physics->Disable();
 	App->textures->Unload(leftP);
 	App->textures->Unload(rightP);
 	App->textures->Unload(background);
@@ -246,7 +247,7 @@ bool ModuleSceneGame::CleanUp()
 	boxes.clear();
 	limit.clear();
 	delete l;
-	App->player->Disable();
+
 
 	return true;
 }
@@ -422,7 +423,7 @@ update_status ModuleSceneGame::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
-		piston.mobile->body->ApplyForce({ 0, -50 }, { 0,0 }, true);
+		piston.mobile->body->ApplyForce({ 0, -90 }, { 0,0 }, true);
 	}
 
 	if (openDoor)
