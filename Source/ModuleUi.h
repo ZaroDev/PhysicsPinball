@@ -14,6 +14,7 @@ public:
 
 	void AddScore(int value);
 	void Draw();
+	void UpdateScores();
 
 	bool Start();
 	update_status Update();
@@ -29,6 +30,7 @@ public:
 
 private:
 	SDL_Texture* nums = nullptr;
+	SDL_Texture* uiTex = nullptr;
 	int numW = 20;
 	int numH= 19;
 	int maxDrawNums = 5;

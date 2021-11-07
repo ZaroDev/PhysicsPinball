@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 #include "SString.h"
+#include "ModuleSceneGame.h"
 
 #include <stdio.h>
 #include <cstdio>
@@ -11,8 +12,8 @@
 ModuleUi::ModuleUi(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	score = 0;
-	prevScore = 0;
-	highScore = 0;
+	prevScore = -1;
+	highScore = -1;
 
 
 
@@ -26,26 +27,19 @@ ModuleUi::~ModuleUi()
 bool ModuleUi::Start() {
 
 	nums = App->textures->Load("pinball/Sprites/numbers.png");
-	App->fonts->Load("pinball/Sprites/numbers.png", "0123456789-", 1);
+	uiTex = App->textures->Load("pinball/Sprites/ui.png");
+	App->fonts->Load("pinball/Sprites/numbers_clear.png", "0123456789-", 1);
+	App->fonts->Load("pinball/Sprites/numbers_orange.png", "0123456789-", 1);
+	App->fonts->Load("pinball/Sprites/numbers_pink.png", "0123456789-", 1);
+	App->fonts->Load("pinball/Sprites/numbers_purple.png", "0123456789-", 1);
 
 	return true;
 }
 
 update_status ModuleUi::Update()
 {
+	if (App->scene_game->IsEnabled() == true) Draw();
 	
-	// DRAW SCORE
-	SDL_Rect rect = { 0,0,20,19 };
-	if (score >= 999999999)
-	{
-		App->fonts->BlitText(0, 0, 0, "999999999");
-	}
-	else if (score < 0) App->fonts->BlitText(0, 0, 0, "-----");
-	else
-	{
-		SString text("%9d", score);
-		App->fonts->BlitText(0, 0, 0, text.GetString());	
-	}
 
 	return UPDATE_CONTINUE;
 }
@@ -59,48 +53,60 @@ bool ModuleUi::CleanUp()
 
 void ModuleUi::Draw()
 {
+	App->renderer->Blit(uiTex, 0, 0, NULL);
+	iPoint pos = { (512 / 2) - (7 * 10) ,46 };
 
+	// DRAW SCORE
+	if (score >= 999999999)
+	{
+		App->fonts->BlitText(pos.x, pos.y, 0, "9999999");
+	}
+	else if (score < 0) App->fonts->BlitText(pos.x, pos.y, 0, "-------");
+	else
+	{
+		SString text("%7d", score);
+		App->fonts->BlitText(pos.x, pos.y, 0, text.GetString());
+	}
 
+	// DRAW MAX SCORE
+	pos = { 0,72 };
+	if (highScore >= 999999999)
+	{
+		App->fonts->BlitText(pos.x, pos.y, 1, "9999999");
+	}
+	else if (highScore < 0) App->fonts->BlitText(pos.x, pos.y, 1, "-------");
+	else
+	{
+		SString text("%7d", highScore);
+		App->fonts->BlitText(pos.x, pos.y, 1, text.GetString());
+	}
+
+	// DRAW PREV SCORE
+	pos = { 512 - (7 * 20),72 };
+	if (prevScore >= 999999999)
+	{
+		App->fonts->BlitText(pos.x, pos.y, 2, "9999999");
+	}
+	else if (prevScore < 0) App->fonts->BlitText(pos.x, pos.y, 1, "-------");
+	else
+	{
+		SString text("%7d", prevScore);
+		App->fonts->BlitText(pos.x, pos.y, 2, text.GetString());
+	}
 }
 
 void ModuleUi::AddScore(int value)
 {
-	switch (comboCount)
-	{
-	case 0: score += value;
-		break;
-	case 1: score += value * 2;
-		break;
-	case 2: score += value * 2;
-		break;
-	case 3: score += value * 3;
-		break;
-	case 4: score += value * 4;
-		break;
-	case 5: score += value * 4;
-		break;
-	default: score += value * 5;
-		break;
-	}
-
-	switch (specialCount)
-	{
-	case 0: score += value;
-		break;
-	case 1: score += value * 2;
-		break;
-	case 2: score += value * 2;
-		break;
-	case 3: score += value * 3;
-		break;
-	case 4: score += value * 4;
-		break;
-	case 5: score += value * 4;
-		break;
-	default: score += value * 5;
-		break;
-	}
+	score += value;
+	
 
 
 }
 
+void ModuleUi::UpdateScores()
+{
+	prevScore = score;
+	if (score > highScore)highScore = score;
+	score = 0;
+
+}
