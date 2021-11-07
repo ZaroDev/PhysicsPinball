@@ -4,7 +4,9 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 #include "SString.h"
+#include "ModulePlayer.h"
 #include "ModuleSceneGame.h"
+#include "ModuleSceneEnding.h"
 
 #include <stdio.h>
 #include <cstdio>
@@ -32,6 +34,7 @@ bool ModuleUi::Start() {
 	App->fonts->Load("pinball/Sprites/numbers_orange.png", "0123456789-", 1);
 	App->fonts->Load("pinball/Sprites/numbers_pink.png", "0123456789-", 1);
 	App->fonts->Load("pinball/Sprites/numbers_purple.png", "0123456789-", 1);
+	App->fonts->Load("pinball/Sprites/numbers_end.png", "0123456789", 1);
 
 	return true;
 }
@@ -39,7 +42,13 @@ bool ModuleUi::Start() {
 update_status ModuleUi::Update()
 {
 	if (App->scene_game->IsEnabled() == true) Draw();
-	
+	if (App->scene_ending->IsEnabled() == true)
+	{
+		SString text("%7d", highScore);
+		if (highScore < 0)text = "0000000";
+		if (highScore > 9999999) text = "9999999";
+		App->fonts->BlitText(32, 250, 4, text.GetString());
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -93,6 +102,11 @@ void ModuleUi::Draw()
 		SString text("%7d", prevScore);
 		App->fonts->BlitText(pos.x, pos.y, 2, text.GetString());
 	}
+
+	pos = {448, 854};
+	SString text("%1d", App->player->lives);
+	App->fonts->BlitText(pos.x, pos.y, 3, text.GetString());
+
 }
 
 void ModuleUi::AddScore(int value)
